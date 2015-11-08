@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4885DCC-6209-4A2E-94C3-7694636D1C92}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>PieChart</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>PieChartEffect</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PaintDotNet.Base">
+      <HintPath>..\..\..\..\..\Program Files\Paint.NET\PaintDotNet.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="PaintDotNet.Core">
+      <HintPath>..\..\..\..\..\Program Files\Paint.NET\PaintDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PaintDotNet.Data, Version=4.6.5693.28, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\paint.net\PaintDotNet.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PaintDotNet.Effects">
+      <HintPath>..\..\..\..\..\Program Files\Paint.NET\PaintDotNet.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PieChart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AngleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="PieChartConfigDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PieChartConfigDialog.Designer.cs">
+      <DependentUpon>PieChartConfigDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PieChartConfigToken.cs" />
+    <Compile Include="PieChart.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PieChartConfigDialog.resx">
+      <DependentUpon>PieChartConfigDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "C:\Program Files\Paint.NET\Effects\"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
