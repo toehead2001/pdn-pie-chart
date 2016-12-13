@@ -1,5 +1,6 @@
 ﻿using PaintDotNet.Effects;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,9 +8,18 @@ namespace PieChartEffect
 {
     internal partial class PieChartConfigDialog : EffectConfigDialog<PieChart, PieChartConfigToken>
     {
+        private Random random = new Random();
+        private List<string> colorList = new List<string>();
+
         public PieChartConfigDialog()
         {
             InitializeComponent();
+
+            foreach (var prop in typeof(Color).GetProperties())
+            {
+                if (prop.PropertyType.Name == "Color" && prop.Name != "Transparent")
+                    colorList.Add(prop.Name);
+            }
         }
 
         public void helpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -17,16 +27,6 @@ namespace PieChartEffect
             e.Cancel = true;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PieChartConfigDialog));
             MessageBox.Show(resources.GetString("Help"), "Pie Chart - Help");
-        }
-
-        private Color getRandomColor()
-        {
-            Random randomGen = new Random();
-            KnownColor[] names = (KnownColor[])Enum.GetValues(typeof(KnownColor));
-            KnownColor randomColorName = names[randomGen.Next(names.Length)];
-            Color randomColor = Color.FromKnownColor(randomColorName);
-
-            return randomColor;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace PieChartEffect
             // Clear the fields for the next item
             tbCategoryName.Text = string.Empty;
             tbCategoryValue.Text = string.Empty;
-            pnlColor.BackColor = getRandomColor();
+            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
             checkBoxExploded.Checked = false;
 
             // Focus back on the name box
@@ -245,7 +245,7 @@ namespace PieChartEffect
             // Start by clearing the data on the form
             tbCategoryName.Name = string.Empty;
             tbCategoryValue.Name = string.Empty;
-            pnlColor.BackColor = getRandomColor();
+            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
             checkBoxExploded.Checked = false;
             lbCategories.Items.Clear();
 
