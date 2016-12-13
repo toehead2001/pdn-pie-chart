@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace AngleControl
 {
-    public partial class AngleSelector : UserControl
+    public class AngleSelector : UserControl
     {
         private double angle;
 
@@ -54,8 +54,8 @@ namespace AngleControl
             {
                 angle = value;
 
-                if (!this.DesignMode && AngleChanged != null)
-                    AngleChanged(); //Raise event
+                if (!this.DesignMode)
+                    AngleChanged?.Invoke(); //Raise event
 
                 this.Refresh();
             }

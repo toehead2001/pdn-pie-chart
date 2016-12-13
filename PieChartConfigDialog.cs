@@ -240,7 +240,7 @@ namespace PieChartEffect
             return new PieChartConfigToken();
         }
 
-        protected override void InitDialogFromToken(PieChartConfigToken fromToken)
+        protected override void InitDialogFromToken(PieChartConfigToken effectTokenCopy)
         {
             // Start by clearing the data on the form
             tbCategoryName.Name = string.Empty;
@@ -250,56 +250,56 @@ namespace PieChartEffect
             lbCategories.Items.Clear();
 
             int i = 1;
-            foreach (Slice tSlice in fromToken.Slices)
+            foreach (Slice tSlice in effectTokenCopy.Slices)
             {
                 Slice slice = new Slice(tSlice.Name, tSlice.Value, tSlice.Color, tSlice.Exploded);
                 lbCategories.Items.Add(slice);
                 i++;
             }
 
-            txtAngle1.Value = (decimal)fromToken.Angle;
+            txtAngle1.Value = (decimal)effectTokenCopy.Angle;
 
-            if (fromToken.OutlineColor == Color.Transparent)
+            if (effectTokenCopy.OutlineColor == Color.Transparent)
                 radioNone.Checked = true;
-            else if (fromToken.OutlineColor == Color.White)
+            else if (effectTokenCopy.OutlineColor == Color.White)
                 radioWhite.Checked = true;
-            else if (fromToken.OutlineColor == Color.FromArgb(68, 68, 68))
+            else if (effectTokenCopy.OutlineColor == Color.FromArgb(68, 68, 68))
                 radioGray.Checked = true;
             else
                 radioBlack.Checked = true;
 
-            numericUpDownScale.Value = (decimal)fromToken.Scale;
+            numericUpDownScale.Value = (decimal)effectTokenCopy.Scale;
 
-            checkBoxDonut.Checked = fromToken.Donut;
+            checkBoxDonut.Checked = effectTokenCopy.Donut;
 
-            checkBoxLabels.Checked = fromToken.Labels;
+            checkBoxLabels.Checked = effectTokenCopy.Labels;
         }
 
-        protected override void LoadIntoTokenFromDialog(PieChartConfigToken toToken)
+        protected override void LoadIntoTokenFromDialog(PieChartConfigToken writeValuesHere)
         {
-            toToken.Angle = (double)txtAngle1.Value;
+            writeValuesHere.Angle = (double)txtAngle1.Value;
 
             if (radioNone.Checked)
-                toToken.OutlineColor = Color.Transparent;
+                writeValuesHere.OutlineColor = Color.Transparent;
             else if (radioWhite.Checked)
-                toToken.OutlineColor = Color.White;
+                writeValuesHere.OutlineColor = Color.White;
             else if (radioGray.Checked)
-                toToken.OutlineColor = Color.FromArgb(68, 68, 68);
+                writeValuesHere.OutlineColor = Color.FromArgb(68, 68, 68);
             else
-                toToken.OutlineColor = Color.Black;
+                writeValuesHere.OutlineColor = Color.Black;
 
-            toToken.Scale = (double)numericUpDownScale.Value;
+            writeValuesHere.Scale = (double)numericUpDownScale.Value;
 
-            toToken.Donut = checkBoxDonut.Checked;
+            writeValuesHere.Donut = checkBoxDonut.Checked;
 
-            toToken.Labels = checkBoxLabels.Checked;
+            writeValuesHere.Labels = checkBoxLabels.Checked;
 
-            toToken.Slices.Clear();
+            writeValuesHere.Slices.Clear();
             for (int i = 0; i < lbCategories.Items.Count; i++)
             {
                 Slice slice = (Slice)lbCategories.Items[i];
 
-                toToken.Slices.Add(new Slice(slice.Name, slice.Value, slice.Color, slice.Exploded));
+                writeValuesHere.Slices.Add(new Slice(slice.Name, slice.Value, slice.Color, slice.Exploded));
             }
         }
 

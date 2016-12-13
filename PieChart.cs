@@ -169,7 +169,7 @@ namespace PieChartEffect
             double labelAngle;
             float labelXOffset;
             float labelYOffset;
-            float labelRadius = (regDiameter / 2) * 0.75f;
+            float labelRadius = (regDiameter / 2f) * 0.75f;
 
             try
             {
