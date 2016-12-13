@@ -195,7 +195,6 @@ namespace PieChartEffect
 
             angleSelector1.Angle = (double)txtAngle1.Value;
 
-            //System.Threading.Thread.Sleep(50); // Work around for race condition with the slice list
             FinishTokenUpdate();
         }
 

@@ -274,14 +274,10 @@ namespace PieChartEffect
                 donutBitmap.Dispose();
             }
 
-
             pieChartSurface = Surface.CopyFromBitmap(pieChartBitmap);
             pieChartBitmap.Dispose();
             overlaySurface = Surface.CopyFromBitmap(overlayBitmap);
             overlayBitmap.Dispose();
-
-
-
         }
 
         protected override void OnRender(Rectangle[] rois, int startIndex, int length)
