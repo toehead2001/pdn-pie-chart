@@ -59,8 +59,8 @@
             this.groupBoxScale = new System.Windows.Forms.GroupBox();
             this.numericUpDownScale = new System.Windows.Forms.NumericUpDown();
             this.groupBoxStyle = new System.Windows.Forms.GroupBox();
-            this.checkBoxDonut = new System.Windows.Forms.CheckBox();
             this.checkBoxLabels = new System.Windows.Forms.CheckBox();
+            this.checkBoxDonut = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBoxAngle.SuspendLayout();
@@ -423,17 +423,6 @@
             this.groupBoxStyle.TabStop = false;
             this.groupBoxStyle.Text = "Style";
             // 
-            // checkBoxDonut
-            // 
-            this.checkBoxDonut.AutoSize = true;
-            this.checkBoxDonut.Location = new System.Drawing.Point(6, 16);
-            this.checkBoxDonut.Name = "checkBoxDonut";
-            this.checkBoxDonut.Size = new System.Drawing.Size(55, 17);
-            this.checkBoxDonut.TabIndex = 0;
-            this.checkBoxDonut.Text = "Donut";
-            this.checkBoxDonut.UseVisualStyleBackColor = true;
-            this.checkBoxDonut.CheckedChanged += new System.EventHandler(this.checkBoxDonut_CheckedChanged);
-            // 
             // checkBoxLabels
             // 
             this.checkBoxLabels.AutoSize = true;
@@ -444,6 +433,17 @@
             this.checkBoxLabels.Text = "Labels";
             this.checkBoxLabels.UseVisualStyleBackColor = true;
             this.checkBoxLabels.CheckedChanged += new System.EventHandler(this.checkBoxLabels_CheckedChanged);
+            // 
+            // checkBoxDonut
+            // 
+            this.checkBoxDonut.AutoSize = true;
+            this.checkBoxDonut.Location = new System.Drawing.Point(6, 16);
+            this.checkBoxDonut.Name = "checkBoxDonut";
+            this.checkBoxDonut.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxDonut.TabIndex = 0;
+            this.checkBoxDonut.Text = "Donut";
+            this.checkBoxDonut.UseVisualStyleBackColor = true;
+            this.checkBoxDonut.CheckedChanged += new System.EventHandler(this.checkBoxDonut_CheckedChanged);
             // 
             // PieChartConfigDialog
             // 
