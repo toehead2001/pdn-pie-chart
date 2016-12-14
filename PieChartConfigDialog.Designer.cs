@@ -39,10 +39,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbCategoryName = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnMoveUpCategory = new System.Windows.Forms.Button();
-            this.btnMoveDownCategory = new System.Windows.Forms.Button();
-            this.btnRemoveCategory = new System.Windows.Forms.Button();
-            this.lbCategories = new System.Windows.Forms.ListBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColumnIcon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnExploded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -63,6 +65,7 @@
             this.checkBoxDonut = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBoxAngle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtAngle1)).BeginInit();
             this.groupBoxOutline.SuspendLayout();
@@ -175,10 +178,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnMoveUpCategory);
-            this.groupBox3.Controls.Add(this.btnMoveDownCategory);
-            this.groupBox3.Controls.Add(this.btnRemoveCategory);
-            this.groupBox3.Controls.Add(this.lbCategories);
+            this.groupBox3.Controls.Add(this.dataGridView1);
             this.groupBox3.Location = new System.Drawing.Point(12, 186);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(260, 134);
@@ -186,50 +186,77 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pie Chart Slices";
             // 
-            // btnMoveUpCategory
+            // dataGridView1
             // 
-            this.btnMoveUpCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveUpCategory.Location = new System.Drawing.Point(228, 19);
-            this.btnMoveUpCategory.Name = "btnMoveUpCategory";
-            this.btnMoveUpCategory.Size = new System.Drawing.Size(26, 23);
-            this.btnMoveUpCategory.TabIndex = 1;
-            this.btnMoveUpCategory.Text = "▲";
-            this.btnMoveUpCategory.UseVisualStyleBackColor = true;
-            this.btnMoveUpCategory.Click += new System.EventHandler(this.btnMoveUpCategory_Click);
+            this.dataGridView1.AllowDrop = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnIcon,
+            this.ColumnColor,
+            this.ColumnName,
+            this.ColumnValue,
+            this.ColumnExploded});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(254, 115);
+            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellChanged += new System.EventHandler(this.dataGridView1_CurrentCellChanged);
+            this.dataGridView1.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView1_RowsAdded);
+            this.dataGridView1.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView1_RowsRemoved);
+            this.dataGridView1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridView1_NumberSort);
+            this.dataGridView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
+            this.dataGridView1.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragOver);
+            this.dataGridView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
+            this.dataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
             // 
-            // btnMoveDownCategory
+            // ColumnIcon
             // 
-            this.btnMoveDownCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveDownCategory.Location = new System.Drawing.Point(228, 48);
-            this.btnMoveDownCategory.Name = "btnMoveDownCategory";
-            this.btnMoveDownCategory.Size = new System.Drawing.Size(26, 23);
-            this.btnMoveDownCategory.TabIndex = 1;
-            this.btnMoveDownCategory.Text = "▼";
-            this.btnMoveDownCategory.UseVisualStyleBackColor = true;
-            this.btnMoveDownCategory.Click += new System.EventHandler(this.btnMoveDownCategory_Click);
+            this.ColumnIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.ColumnIcon.HeaderText = "";
+            this.ColumnIcon.Name = "ColumnIcon";
+            this.ColumnIcon.ReadOnly = true;
+            this.ColumnIcon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnIcon.Width = 5;
             // 
-            // btnRemoveCategory
+            // ColumnColor
             // 
-            this.btnRemoveCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoveCategory.Location = new System.Drawing.Point(228, 104);
-            this.btnRemoveCategory.Name = "btnRemoveCategory";
-            this.btnRemoveCategory.Size = new System.Drawing.Size(26, 23);
-            this.btnRemoveCategory.TabIndex = 1;
-            this.btnRemoveCategory.Text = "X";
-            this.btnRemoveCategory.UseVisualStyleBackColor = true;
-            this.btnRemoveCategory.Click += new System.EventHandler(this.btnRemoveCategory_Click);
+            this.ColumnColor.HeaderText = "colorValue";
+            this.ColumnColor.Name = "ColumnColor";
+            this.ColumnColor.Visible = false;
             // 
-            // lbCategories
+            // ColumnName
             // 
-            this.lbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.lbCategories.FormattingEnabled = true;
-            this.lbCategories.Location = new System.Drawing.Point(6, 19);
-            this.lbCategories.Name = "lbCategories";
-            this.lbCategories.Size = new System.Drawing.Size(216, 108);
-            this.lbCategories.TabIndex = 0;
-            this.lbCategories.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbCategories_DrawItem);
-            this.lbCategories.SelectedIndexChanged += new System.EventHandler(this.lbCategories_SelectedIndexChanged);
+            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnName.HeaderText = "Name";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.Width = 60;
+            // 
+            // ColumnValue
+            // 
+            this.ColumnValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnValue.HeaderText = "Value";
+            this.ColumnValue.Name = "ColumnValue";
+            this.ColumnValue.Width = 59;
+            // 
+            // ColumnExploded
+            // 
+            this.ColumnExploded.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnExploded.HeaderText = "Exploded";
+            this.ColumnExploded.Name = "ColumnExploded";
+            this.ColumnExploded.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnExploded.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnExploded.Width = 76;
             // 
             // btnOK
             // 
@@ -471,6 +498,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBoxAngle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtAngle1)).EndInit();
             this.groupBoxOutline.ResumeLayout(false);
@@ -494,10 +522,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbCategoryName;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnMoveUpCategory;
-        private System.Windows.Forms.Button btnMoveDownCategory;
-        private System.Windows.Forms.Button btnRemoveCategory;
-        private System.Windows.Forms.ListBox lbCategories;
         private System.Windows.Forms.GroupBox groupBoxAngle;
         private System.Windows.Forms.NumericUpDown txtAngle1;
         private AngleControl.AngleSelector angleSelector1;
@@ -518,5 +542,11 @@
         private System.Windows.Forms.GroupBox groupBoxStyle;
         private System.Windows.Forms.CheckBox checkBoxDonut;
         private System.Windows.Forms.CheckBox checkBoxLabels;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewImageColumn ColumnIcon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnExploded;
     }
 }

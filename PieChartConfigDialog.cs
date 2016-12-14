@@ -10,16 +10,24 @@ namespace PieChartEffect
     {
         private Random random = new Random();
         private List<string> colorList = new List<string>();
+        int iconSize;
+        private Rectangle dragBoxFromMouseDown;
+        private int rowIndexFromMouseDown;
+        private int rowIndexOfItemUnderMouseToDrop;
 
         public PieChartConfigDialog()
         {
             InitializeComponent();
+
+            float dpi = this.AutoScaleDimensions.Width / 96f;
+            iconSize = (int)(16f * dpi);
 
             foreach (var prop in typeof(Color).GetProperties())
             {
                 if (prop.PropertyType.Name == "Color" && prop.Name != "Transparent")
                     colorList.Add(prop.Name);
             }
+            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
         }
 
         public void helpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -54,9 +62,22 @@ namespace PieChartEffect
                 return;
             }
 
-            // Create the item and add it to the list box
-            Slice slice = new Slice(tbCategoryName.Text, Convert.ToDouble(tbCategoryValue.Text), pnlColor.BackColor, checkBoxExploded.Checked);
-            lbCategories.Items.Add(slice);
+            Bitmap colorIcon = new Bitmap(iconSize, iconSize);
+            using (Graphics g = Graphics.FromImage(colorIcon))
+            using (SolidBrush color = new SolidBrush(pnlColor.BackColor))
+            {
+                Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                g.FillRectangle(color, g.ClipBounds);
+                rect.Width--;
+                rect.Height--;
+                g.DrawRectangle(Pens.Black, rect);
+                rect.Width -= 2;
+                rect.Height -= 2;
+                rect.Offset(1, 1);
+                g.DrawRectangle(Pens.White, rect);
+            }
+
+            dataGridView1.Rows.Add(new object[] { colorIcon, pnlColor.BackColor.ToArgb().ToString(), tbCategoryName.Text, tbCategoryValue.Text, checkBoxExploded.Checked });
 
             // Clear the fields for the next item
             tbCategoryName.Text = string.Empty;
@@ -66,110 +87,6 @@ namespace PieChartEffect
 
             // Focus back on the name box
             tbCategoryName.Focus();
-
-            // Update
-            FinishTokenUpdate();
-        }
-
-        private void btnRemoveCategory_Click(object sender, EventArgs e)
-        {
-            if ((lbCategories.SelectedIndex != -1) && (lbCategories.Items.Count == 1))
-            {
-                lbCategories.Items.RemoveAt(lbCategories.SelectedIndex);
-
-                FinishTokenUpdate();
-            }
-            else if ((lbCategories.SelectedIndex != -1) && (lbCategories.SelectedIndex < lbCategories.Items.Count - 1))
-            {
-                lbCategories.SelectedIndex += 1;
-                lbCategories.Items.RemoveAt(lbCategories.SelectedIndex - 1);
-
-                FinishTokenUpdate();
-            }
-            else if ((lbCategories.SelectedIndex != -1) && (lbCategories.SelectedIndex == lbCategories.Items.Count - 1))
-            {
-                lbCategories.SelectedIndex -= 1;
-                lbCategories.Items.RemoveAt(lbCategories.SelectedIndex + 1);
-
-                FinishTokenUpdate();
-            }
-        }
-
-        private void btnMoveUpCategory_Click(object sender, EventArgs e)
-        {
-            if (lbCategories.SelectedIndex > 0)
-            {
-                lbCategories.Items.Insert(lbCategories.SelectedIndex - 1, lbCategories.SelectedItem);
-                lbCategories.SelectedIndex -= 2;
-                lbCategories.Items.RemoveAt(lbCategories.SelectedIndex + 2);
-
-                FinishTokenUpdate();
-            }
-        }
-
-        private void btnMoveDownCategory_Click(object sender, EventArgs e)
-        {
-            if ((lbCategories.SelectedIndex != -1) && (lbCategories.SelectedIndex < lbCategories.Items.Count - 1))
-            {
-                lbCategories.Items.Insert(lbCategories.SelectedIndex + 2, lbCategories.SelectedItem);
-                lbCategories.SelectedIndex += 2;
-                lbCategories.Items.RemoveAt(lbCategories.SelectedIndex - 2);
-
-                FinishTokenUpdate();
-            }
-        }
-
-        private void lbCategories_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            bool selected = lbCategories.SelectedIndex == e.Index;
-
-            if (-1 == e.Index)
-            {
-                // Fill with background color and return
-                using (SolidBrush temp = new SolidBrush(e.BackColor))
-                {
-                    e.Graphics.FillRectangle(temp, e.Bounds);
-                }
-                return;
-            }
-
-            // Get the item
-            Slice slice = (Slice)lbCategories.Items[e.Index];
-            
-            // Start by filling the background
-            if (selected)
-            {
-                using (SolidBrush hiLighB = new SolidBrush(SystemColors.Highlight))
-                {
-                    e.Graphics.FillRectangle(hiLighB, e.Bounds);
-                }
-            }
-            else
-            {
-                using (SolidBrush backB = new SolidBrush(e.BackColor))
-                {
-                    e.Graphics.FillRectangle(backB, e.Bounds);
-                }
-            }
-
-            // Draw a small box for the item's color
-            Rectangle box = e.Bounds;
-            box.Height -= 4;
-            box.Width = box.Height;
-            box.X += 2;
-            box.Y += 2;
-            SolidBrush boxBrush = new SolidBrush(slice.Color);
-            e.Graphics.FillRectangle(boxBrush, box);
-
-            // Draw the item's text
-            SolidBrush textBrush = new SolidBrush(e.ForeColor);
-            string itemText = slice.Name + " - " + slice.Value + (slice.Exploded ? " (Exploded)" : "");
-            e.Graphics.DrawString(itemText, lbCategories.Font, textBrush, box.Right + 2, e.Bounds.Y);
-        }
-
-        private void lbCategories_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lbCategories.Refresh();
         }
 
         private void pnlColor_Click(object sender, EventArgs e)
@@ -233,8 +150,112 @@ namespace PieChartEffect
             FinishTokenUpdate();
         }
 
-        #region EffectConfigDialog stuff
+        #region DataGridView functions
+        private void dataGridView1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                // If the mouse moves outside the rectangle, start the drag.
+                if (dragBoxFromMouseDown != Rectangle.Empty &&
+                !dragBoxFromMouseDown.Contains(e.X, e.Y))
+                {
+                    // Proceed with the drag and drop, passing in the list item.
+                    DragDropEffects dropEffect = dataGridView1.DoDragDrop(
+                          dataGridView1.Rows[rowIndexFromMouseDown],
+                          DragDropEffects.Move);
+                }
+            }
+        }
 
+        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Get the index of the item the mouse is below.
+            rowIndexFromMouseDown = dataGridView1.HitTest(e.X, e.Y).RowIndex;
+
+            if (rowIndexFromMouseDown != -1)
+            {
+                // Remember the point where the mouse down occurred. 
+                // The DragSize indicates the size that the mouse can move 
+                // before a drag event should be started.                
+                Size dragSize = SystemInformation.DragSize;
+
+                // Create a rectangle using the DragSize, with the mouse position being
+                // at the center of the rectangle.
+                dragBoxFromMouseDown = new Rectangle(
+                          new Point(
+                            e.X - (dragSize.Width / 2),
+                            e.Y - (dragSize.Height / 2)),
+                      dragSize);
+            }
+            else
+                // Reset the rectangle if the mouse is not over an item in the ListBox.
+                dragBoxFromMouseDown = Rectangle.Empty;
+        }
+
+        private void dataGridView1_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void dataGridView1_DragDrop(object sender, DragEventArgs e)
+        {
+            // The mouse locations are relative to the screen, so they must be 
+            // converted to client coordinates.
+            Point clientPoint = dataGridView1.PointToClient(new Point(e.X, e.Y));
+
+            // Get the row index of the item the mouse is below. 
+            rowIndexOfItemUnderMouseToDrop = dataGridView1.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+
+            // If the drag operation was a move then remove and insert the row.
+            if (e.Effect == DragDropEffects.Move)
+            {
+                DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+                dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
+                dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+
+            }
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //FinishTokenUpdate();
+        }
+
+        private void dataGridView1_CurrentCellChanged(object sender, EventArgs e)
+        {
+            FinishTokenUpdate();
+        }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            FinishTokenUpdate();
+        }
+
+        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            FinishTokenUpdate();
+        }
+
+        private void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == ColumnExploded.Index && e.RowIndex != -1)
+            {
+                dataGridView1.EndEdit();
+                FinishTokenUpdate();
+            }
+        }
+
+        private void dataGridView1_NumberSort(object sender, DataGridViewSortCompareEventArgs e)
+        {
+            if (e.Column.Index == ColumnValue.Index)
+            {
+                e.SortResult = double.Parse(e.CellValue1.ToString()).CompareTo(double.Parse(e.CellValue2.ToString()));
+                e.Handled = true;//pass by the default sorting
+            }
+        }
+        #endregion
+
+        #region EffectConfigDialog stuff
         protected override PieChartConfigToken CreateInitialToken()
         {
             return new PieChartConfigToken();
@@ -245,17 +266,42 @@ namespace PieChartEffect
             // Start by clearing the data on the form
             tbCategoryName.Name = string.Empty;
             tbCategoryValue.Name = string.Empty;
-            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
             checkBoxExploded.Checked = false;
-            lbCategories.Items.Clear();
 
-            int i = 1;
-            foreach (Slice tSlice in effectTokenCopy.Slices)
+            #region DataGridView
+            dataGridView1.RowsAdded -= dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
+            dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
+
+            // note: don't change to foreach
+            int rowCount = dataGridView1.Rows.Count;
+            for (int i = 0; i < rowCount; i++)
+                dataGridView1.Rows.RemoveAt(0);
+
+            foreach (Slice slice in effectTokenCopy.Slices)
             {
-                Slice slice = new Slice(tSlice.Name, tSlice.Value, tSlice.Color, tSlice.Exploded);
-                lbCategories.Items.Add(slice);
-                i++;
+                Bitmap colorIcon = new Bitmap(iconSize, iconSize);
+                using (Graphics g = Graphics.FromImage(colorIcon))
+                using (SolidBrush color = new SolidBrush(slice.Color))
+                {
+                    Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                    g.FillRectangle(color, g.ClipBounds);
+                    rect.Width--;
+                    rect.Height--;
+                    g.DrawRectangle(Pens.Black, rect);
+                    rect.Width -= 2;
+                    rect.Height -= 2;
+                    rect.Offset(1, 1);
+                    g.DrawRectangle(Pens.White, rect);
+                }
+
+                dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.ToArgb().ToString(), slice.Name, slice.Value.ToString(), slice.Exploded });
             }
+
+            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
+            dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
+            #endregion
 
             txtAngle1.Value = (decimal)effectTokenCopy.Angle;
 
@@ -295,11 +341,14 @@ namespace PieChartEffect
             writeValuesHere.Labels = checkBoxLabels.Checked;
 
             writeValuesHere.Slices.Clear();
-            for (int i = 0; i < lbCategories.Items.Count; i++)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                Slice slice = (Slice)lbCategories.Items[i];
+                Color color = Color.FromArgb(Convert.ToInt32((string)row.Cells[1].Value));
+                string name = (string)row.Cells[2].Value;
+                double value = Convert.ToDouble((string)row.Cells[3].Value);
+                bool exploded = (bool)row.Cells[4].Value;
 
-                writeValuesHere.Slices.Add(new Slice(slice.Name, slice.Value, slice.Color, slice.Exploded));
+                writeValuesHere.Slices.Add(new Slice(name, value, color, exploded));
             }
         }
 
