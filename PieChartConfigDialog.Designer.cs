@@ -63,6 +63,7 @@
             this.groupBoxStyle = new System.Windows.Forms.GroupBox();
             this.checkBoxLabels = new System.Windows.Forms.CheckBox();
             this.checkBoxDonut = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -76,6 +77,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.checkBoxExploded);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.btnAdd);
@@ -135,7 +137,7 @@
             this.pnlColor.BackColor = System.Drawing.Color.Red;
             this.pnlColor.Location = new System.Drawing.Point(74, 75);
             this.pnlColor.Name = "pnlColor";
-            this.pnlColor.Size = new System.Drawing.Size(180, 20);
+            this.pnlColor.Size = new System.Drawing.Size(150, 20);
             this.pnlColor.TabIndex = 4;
             this.pnlColor.Click += new System.EventHandler(this.pnlColor_Click);
             this.pnlColor.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlColor_Paint);
@@ -470,6 +472,18 @@
             this.checkBoxDonut.UseVisualStyleBackColor = true;
             this.checkBoxDonut.CheckedChanged += new System.EventHandler(this.checkBoxDonut_CheckedChanged);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(228, 74);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(26, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "¿?";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // PieChartConfigDialog
             // 
             this.AcceptButton = this.btnOK;
@@ -547,5 +561,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnExploded;
+        private System.Windows.Forms.Button button1;
     }
 }

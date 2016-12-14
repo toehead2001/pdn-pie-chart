@@ -267,6 +267,11 @@ namespace PieChartEffect
             swatchRect.Offset(1, 1);
             g.DrawRectangle(Pens.White, swatchRect);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
+        }
         #endregion
 
         #region EffectConfigDialog stuff
