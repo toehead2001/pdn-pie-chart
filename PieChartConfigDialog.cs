@@ -499,6 +499,36 @@ namespace PieChartEffect
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
         }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == ColumnIcon.Index)
+            {
+                if (DialogResult.OK != colorDialog1.ShowDialog())
+                    return;
+
+                using (Graphics g = Graphics.FromImage((Bitmap)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value))
+                using (SolidBrush color = new SolidBrush(colorDialog1.Color))
+                {
+                    Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                    g.FillRectangle(color, g.ClipBounds);
+                    rect.Width--;
+                    rect.Height--;
+                    g.DrawRectangle(Pens.Black, rect);
+                    rect.Width -= 2;
+                    rect.Height -= 2;
+                    rect.Offset(1, 1);
+                    g.DrawRectangle(Pens.White, rect);
+                }
+
+                dataGridView1.Rows[e.RowIndex].Cells[1].Value = colorDialog1.Color.ToArgb().ToString();
+                string colorTooltip = $"{colorDialog1.Color.R.ToString()}, {colorDialog1.Color.G.ToString()}, {colorDialog1.Color.B.ToString()}" +
+                    ((colorDialog1.Color.IsNamedColor) ? $"\n({colorDialog1.Color.ToKnownColor().ToString()})" : string.Empty);
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = colorTooltip;
+
+                FinishTokenUpdate();
+            }
+        }
     }
 
     internal class Slice
