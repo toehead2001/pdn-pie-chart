@@ -498,6 +498,8 @@ namespace PieChartEffect
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
+
+            FinishTokenUpdate();
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
