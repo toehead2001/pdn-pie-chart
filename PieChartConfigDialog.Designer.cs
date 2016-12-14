@@ -95,7 +95,7 @@
             // checkBoxExploded
             // 
             this.checkBoxExploded.AutoSize = true;
-            this.checkBoxExploded.Location = new System.Drawing.Point(74, 99);
+            this.checkBoxExploded.Location = new System.Drawing.Point(74, 101);
             this.checkBoxExploded.Name = "checkBoxExploded";
             this.checkBoxExploded.Size = new System.Drawing.Size(15, 14);
             this.checkBoxExploded.TabIndex = 8;
@@ -104,17 +104,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 100);
+            this.label4.Location = new System.Drawing.Point(6, 102);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 7;
             this.label4.Text = "Exploded:";
             // 
             // btnAdd
             // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(6, 123);
+            this.btnAdd.Location = new System.Drawing.Point(6, 125);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(248, 23);
             this.btnAdd.TabIndex = 6;
@@ -125,9 +123,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 74);
+            this.label3.Location = new System.Drawing.Point(6, 78);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Color:";
             // 
@@ -135,7 +133,7 @@
             // 
             this.pnlColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlColor.BackColor = System.Drawing.Color.Red;
-            this.pnlColor.Location = new System.Drawing.Point(74, 71);
+            this.pnlColor.Location = new System.Drawing.Point(74, 75);
             this.pnlColor.Name = "pnlColor";
             this.pnlColor.Size = new System.Drawing.Size(180, 20);
             this.pnlColor.TabIndex = 4;
@@ -145,18 +143,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 48);
+            this.label2.Location = new System.Drawing.Point(6, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Value:";
             // 
             // tbCategoryValue
             // 
             this.tbCategoryValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCategoryValue.Location = new System.Drawing.Point(74, 45);
+            this.tbCategoryValue.Location = new System.Drawing.Point(74, 47);
             this.tbCategoryValue.Name = "tbCategoryValue";
-            this.tbCategoryValue.Size = new System.Drawing.Size(180, 20);
+            this.tbCategoryValue.Size = new System.Drawing.Size(180, 22);
             this.tbCategoryValue.TabIndex = 2;
             // 
             // label1
@@ -164,7 +162,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Name:";
             // 
@@ -173,7 +171,7 @@
             this.tbCategoryName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCategoryName.Location = new System.Drawing.Point(74, 19);
             this.tbCategoryName.Name = "tbCategoryName";
-            this.tbCategoryName.Size = new System.Drawing.Size(180, 20);
+            this.tbCategoryName.Size = new System.Drawing.Size(180, 22);
             this.tbCategoryName.TabIndex = 0;
             // 
             // groupBox3
@@ -203,11 +201,11 @@
             this.ColumnValue,
             this.ColumnExploded});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 18);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(254, 115);
+            this.dataGridView1.Size = new System.Drawing.Size(254, 113);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
@@ -240,14 +238,14 @@
             this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ColumnName.HeaderText = "Name";
             this.ColumnName.Name = "ColumnName";
-            this.ColumnName.Width = 60;
+            this.ColumnName.Width = 61;
             // 
             // ColumnValue
             // 
             this.ColumnValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ColumnValue.HeaderText = "Value";
             this.ColumnValue.Name = "ColumnValue";
-            this.ColumnValue.Width = 59;
+            this.ColumnValue.Width = 61;
             // 
             // ColumnExploded
             // 
@@ -256,7 +254,7 @@
             this.ColumnExploded.Name = "ColumnExploded";
             this.ColumnExploded.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColumnExploded.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnExploded.Width = 76;
+            this.ColumnExploded.Width = 80;
             // 
             // btnOK
             // 
@@ -306,7 +304,7 @@
             0,
             -2147483648});
             this.txtAngle1.Name = "txtAngle1";
-            this.txtAngle1.Size = new System.Drawing.Size(60, 20);
+            this.txtAngle1.Size = new System.Drawing.Size(60, 22);
             this.txtAngle1.TabIndex = 0;
             this.txtAngle1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtAngle1.ValueChanged += new System.EventHandler(this.txtAngle1_ValueChanged);
@@ -331,14 +329,14 @@
             this.groupBoxOutline.Size = new System.Drawing.Size(82, 108);
             this.groupBoxOutline.TabIndex = 3;
             this.groupBoxOutline.TabStop = false;
-            this.groupBoxOutline.Text = "Outline Color";
+            this.groupBoxOutline.Text = "Outline";
             // 
             // radioNone
             // 
             this.radioNone.AutoSize = true;
             this.radioNone.Location = new System.Drawing.Point(6, 18);
             this.radioNone.Name = "radioNone";
-            this.radioNone.Size = new System.Drawing.Size(51, 17);
+            this.radioNone.Size = new System.Drawing.Size(53, 17);
             this.radioNone.TabIndex = 3;
             this.radioNone.TabStop = true;
             this.radioNone.Text = "None";
@@ -362,7 +360,7 @@
             this.radioGray.AutoSize = true;
             this.radioGray.Location = new System.Drawing.Point(6, 62);
             this.radioGray.Name = "radioGray";
-            this.radioGray.Size = new System.Drawing.Size(47, 17);
+            this.radioGray.Size = new System.Drawing.Size(48, 17);
             this.radioGray.TabIndex = 1;
             this.radioGray.TabStop = true;
             this.radioGray.Text = "Gray";
@@ -374,7 +372,7 @@
             this.radioWhite.AutoSize = true;
             this.radioWhite.Location = new System.Drawing.Point(6, 84);
             this.radioWhite.Name = "radioWhite";
-            this.radioWhite.Size = new System.Drawing.Size(53, 17);
+            this.radioWhite.Size = new System.Drawing.Size(56, 17);
             this.radioWhite.TabIndex = 2;
             this.radioWhite.TabStop = true;
             this.radioWhite.Text = "White";
@@ -429,7 +427,7 @@
             0,
             65536});
             this.numericUpDownScale.Name = "numericUpDownScale";
-            this.numericUpDownScale.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownScale.Size = new System.Drawing.Size(60, 22);
             this.numericUpDownScale.TabIndex = 1;
             this.numericUpDownScale.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownScale.Value = new decimal(new int[] {
@@ -455,7 +453,7 @@
             this.checkBoxLabels.AutoSize = true;
             this.checkBoxLabels.Location = new System.Drawing.Point(6, 35);
             this.checkBoxLabels.Name = "checkBoxLabels";
-            this.checkBoxLabels.Size = new System.Drawing.Size(57, 17);
+            this.checkBoxLabels.Size = new System.Drawing.Size(58, 17);
             this.checkBoxLabels.TabIndex = 1;
             this.checkBoxLabels.Text = "Labels";
             this.checkBoxLabels.UseVisualStyleBackColor = true;
@@ -466,7 +464,7 @@
             this.checkBoxDonut.AutoSize = true;
             this.checkBoxDonut.Location = new System.Drawing.Point(6, 16);
             this.checkBoxDonut.Name = "checkBoxDonut";
-            this.checkBoxDonut.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxDonut.Size = new System.Drawing.Size(59, 17);
             this.checkBoxDonut.TabIndex = 0;
             this.checkBoxDonut.Text = "Donut";
             this.checkBoxDonut.UseVisualStyleBackColor = true;
@@ -490,6 +488,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBoxAngle);
             this.Controls.Add(this.groupBoxOutline);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HelpButton = true;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PieChartConfigDialog";
