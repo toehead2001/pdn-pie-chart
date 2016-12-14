@@ -114,7 +114,7 @@ namespace PieChartEffect
             // Get the index of the item the mouse is below.
             rowIndexFromMouseDown = dataGridView1.HitTest(e.X, e.Y).RowIndex;
 
-            if (rowIndexFromMouseDown != -1)
+            if (rowIndexFromMouseDown != -1 && !dataGridView1.Rows[rowIndexFromMouseDown].IsNewRow)
             {
                 // Remember the point where the mouse down occurred. 
                 // The DragSize indicates the size that the mouse can move 
