@@ -135,12 +135,12 @@
             // 
             this.pnlColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlColor.BackColor = System.Drawing.Color.Red;
-            this.pnlColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlColor.Location = new System.Drawing.Point(74, 71);
             this.pnlColor.Name = "pnlColor";
             this.pnlColor.Size = new System.Drawing.Size(180, 20);
             this.pnlColor.TabIndex = 4;
             this.pnlColor.Click += new System.EventHandler(this.pnlColor_Click);
+            this.pnlColor.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlColor_Paint);
             // 
             // label2
             // 
