@@ -168,8 +168,19 @@ namespace PieChartEffect
             FinishTokenUpdate();
         }
 
-        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void dataGridView1_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
+            double d;
+            string newCellValue;
+
+            newCellValue = (string)dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value;
+            if (!double.TryParse(newCellValue, out d))
+                dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value = "1";
+
+            newCellValue = (string)dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnName.Index].Value;
+            if (newCellValue == string.Empty || newCellValue == null)
+                dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnName.Index].Value = $"New Slice {e.Row.Index}";
+
             FinishTokenUpdate();
         }
 
@@ -259,7 +270,6 @@ namespace PieChartEffect
         protected override void InitDialogFromToken(PieChartConfigToken effectTokenCopy)
         {
             #region DataGridView
-            dataGridView1.RowsAdded -= dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
 
@@ -295,7 +305,6 @@ namespace PieChartEffect
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
             }
 
-            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
             #endregion
@@ -398,8 +407,6 @@ namespace PieChartEffect
             if (csvSlices.Count == 0)
                 return;
 
-            dataGridView1.RowsAdded -= dataGridView1_RowsAdded;
-            dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
 
             foreach (Slice slice in csvSlices)
@@ -426,8 +433,6 @@ namespace PieChartEffect
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
             }
 
-            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
-            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
 
             FinishTokenUpdate();
