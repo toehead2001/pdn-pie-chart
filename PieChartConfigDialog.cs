@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Microsoft.VisualBasic.FileIO;
 using System.Windows.Forms;
 
 namespace PieChartEffect
@@ -425,6 +426,79 @@ namespace PieChartEffect
 
         #endregion
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK != openFileDialog1.ShowDialog())
+                return;
+
+            List<Slice> csvSlices = new List<Slice>();
+
+            using (TextFieldParser parser = new TextFieldParser(openFileDialog1.FileName))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+                string[] fields;
+                string name;
+                double value;
+                Color randomColor;
+                while (!parser.EndOfData)
+                {
+                    //Process row
+                    try {
+                        fields = parser.ReadFields(); }
+                    catch { return; }
+
+                    if (fields.Length < 2)
+                        continue;
+
+                    if (double.TryParse(fields[0], out value))
+                        name = fields[1];
+                    else if (double.TryParse(fields[1], out value))
+                        name = fields[0];
+                    else
+                        continue;
+
+                    randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
+
+                    csvSlices.Add(new Slice(name, value, randomColor, false));
+                }
+            }
+
+            if (csvSlices.Count == 0)
+                return;
+
+            dataGridView1.RowsAdded -= dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
+            dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
+
+            foreach (Slice slice in csvSlices)
+            {
+                Bitmap colorIcon = new Bitmap(iconSize, iconSize);
+                using (Graphics g = Graphics.FromImage(colorIcon))
+                using (SolidBrush color = new SolidBrush(slice.Color))
+                {
+                    Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                    g.FillRectangle(color, g.ClipBounds);
+                    rect.Width--;
+                    rect.Height--;
+                    g.DrawRectangle(Pens.Black, rect);
+                    rect.Width -= 2;
+                    rect.Height -= 2;
+                    rect.Offset(1, 1);
+                    g.DrawRectangle(Pens.White, rect);
+                }
+
+                string colorTooltip = $"{slice.Color.R.ToString()}, {slice.Color.G.ToString()}, {slice.Color.B.ToString()}" +
+                    ((slice.Color.IsNamedColor) ? $"\n({slice.Color.ToKnownColor().ToString()})" : string.Empty);
+
+                dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.ToArgb().ToString(), slice.Name, slice.Value.ToString(), slice.Exploded });
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
+            }
+
+            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
+            dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
+        }
     }
 
     internal class Slice

@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PaintDotNet.Base">
       <HintPath>..\..\..\..\..\Program Files\Paint.NET\PaintDotNet.Base.dll</HintPath>
     </Reference>
