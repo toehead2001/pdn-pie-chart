@@ -210,16 +210,26 @@ namespace PieChartEffect
             {
                 double d;
                 string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (newCellValue == string.Empty || !double.TryParse(newCellValue, out d))
+                if (!double.TryParse(newCellValue, out d))
                 {
+                    if (oldCellValue == string.Empty || oldCellValue == null)
+                        oldCellValue = "1";
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
+                }
+                else if (d <= 0)
+                {
+                    if (oldCellValue == string.Empty || oldCellValue == null)
+                        oldCellValue = "1";
                     dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
                 }
             }
             else if (e.ColumnIndex == ColumnName.Index)
             {
                 string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (newCellValue == string.Empty)
+                if (newCellValue == string.Empty || newCellValue == null)
                 {
+                    if (oldCellValue == string.Empty || oldCellValue == null)
+                        oldCellValue = $"New Slice {e.RowIndex}";
                     dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
                 }
             }
