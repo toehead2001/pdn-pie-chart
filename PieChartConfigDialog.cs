@@ -14,6 +14,7 @@ namespace PieChartEffect
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
+        private string oldCellValue;
 
         public PieChartConfigDialog()
         {
@@ -255,6 +256,35 @@ namespace PieChartEffect
             {
                 e.SortResult = double.Parse(e.CellValue1.ToString()).CompareTo(double.Parse(e.CellValue2.ToString()));
                 e.Handled = true;//pass by the default sorting
+            }
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == ColumnValue.Index || e.ColumnIndex == ColumnName.Index)
+            {
+                oldCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            }
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == ColumnValue.Index)
+            {
+                double d;
+                string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (newCellValue == string.Empty || !double.TryParse(newCellValue, out d))
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
+                }
+            }
+            else if (e.ColumnIndex == ColumnName.Index)
+            {
+                string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (newCellValue == string.Empty)
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
+                }
             }
         }
 
