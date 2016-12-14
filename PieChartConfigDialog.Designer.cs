@@ -158,6 +158,7 @@
             this.tbCategoryValue.Name = "tbCategoryValue";
             this.tbCategoryValue.Size = new System.Drawing.Size(180, 22);
             this.tbCategoryValue.TabIndex = 2;
+            this.tbCategoryValue.TextChanged += new System.EventHandler(this.tbCategoryValue_TextChanged);
             // 
             // label1
             // 

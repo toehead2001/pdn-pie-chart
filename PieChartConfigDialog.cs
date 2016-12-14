@@ -272,6 +272,20 @@ namespace PieChartEffect
         {
             pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
         }
+
+        private void tbCategoryValue_TextChanged(object sender, EventArgs e)
+        {
+            if (tbCategoryValue.Text != string.Empty)
+            {
+                double d;
+                if (!double.TryParse(tbCategoryValue.Text, out d))
+                {
+                    tbCategoryValue.BackColor = Color.Pink;
+                    return;
+                }
+            }
+            tbCategoryValue.BackColor = SystemColors.Window;
+        }
         #endregion
 
         #region EffectConfigDialog stuff
