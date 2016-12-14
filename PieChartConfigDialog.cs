@@ -511,7 +511,7 @@ namespace PieChartEffect
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == ColumnIcon.Index)
+            if (e.ColumnIndex == ColumnIcon.Index && !dataGridView1.Rows[e.RowIndex].IsNewRow)
             {
                 if (DialogResult.OK != colorDialog1.ShowDialog())
                     return;
@@ -571,6 +571,34 @@ namespace PieChartEffect
             if (dataGridView1.Rows[e.RowIndex].IsNewRow && e.ColumnIndex == ColumnIcon.Index)
             {
                 e.Value = plusImage;
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == ColumnIcon.Index && !dataGridView1.Rows[e.RowIndex].IsNewRow)
+            {
+                Color randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
+                using (Graphics g = Graphics.FromImage((Bitmap)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value))
+                using (SolidBrush color = new SolidBrush(randomColor))
+                {
+                    Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                    g.FillRectangle(color, g.ClipBounds);
+                    rect.Width--;
+                    rect.Height--;
+                    g.DrawRectangle(Pens.Black, rect);
+                    rect.Width -= 2;
+                    rect.Height -= 2;
+                    rect.Offset(1, 1);
+                    g.DrawRectangle(Pens.White, rect);
+                }
+
+                dataGridView1.Rows[e.RowIndex].Cells[1].Value = randomColor.ToArgb().ToString();
+                string colorTooltip = $"{randomColor.R.ToString()}, {randomColor.G.ToString()}, {randomColor.B.ToString()}" +
+                    ((randomColor.IsNamedColor) ? $"\n({randomColor.ToKnownColor().ToString()})" : string.Empty);
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = colorTooltip;
+
+                FinishTokenUpdate();
             }
         }
     }
