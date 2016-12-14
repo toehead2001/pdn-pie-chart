@@ -11,11 +11,12 @@ namespace PieChartEffect
     {
         private Random random = new Random();
         private List<string> colorList = new List<string>();
-        int iconSize;
+        private int iconSize;
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
         private string oldCellValue;
+        private readonly Image plusImage = new Bitmap(typeof(PieChartConfigDialog), "Plus.png");
 
         public PieChartConfigDialog()
         {
@@ -344,7 +345,10 @@ namespace PieChartEffect
             // note: don't change to foreach
             int rowCount = dataGridView1.Rows.Count;
             for (int i = 0; i < rowCount; i++)
-                dataGridView1.Rows.RemoveAt(0);
+            {
+                if (!dataGridView1.Rows[0].IsNewRow)
+                    dataGridView1.Rows.RemoveAt(0);
+            }
 
             foreach (Slice slice in effectTokenCopy.Slices)
             {
@@ -415,6 +419,9 @@ namespace PieChartEffect
             writeValuesHere.Slices.Clear();
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
+                if (row.IsNewRow)
+                    continue;
+
                 Color color = Color.FromArgb(Convert.ToInt32((string)row.Cells[1].Value));
                 string name = (string)row.Cells[2].Value;
                 double value = Convert.ToDouble((string)row.Cells[3].Value);
@@ -529,6 +536,41 @@ namespace PieChartEffect
                 dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = colorTooltip;
 
                 FinishTokenUpdate();
+            }
+        }
+
+        private void dataGridView1_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            Color randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
+            e.Row.Cells[0].Value = new Bitmap(iconSize, iconSize);
+            using (Graphics g = Graphics.FromImage((Bitmap)e.Row.Cells[0].Value))
+            using (SolidBrush color = new SolidBrush(randomColor))
+            {
+                Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
+                g.FillRectangle(color, g.ClipBounds);
+                rect.Width--;
+                rect.Height--;
+                g.DrawRectangle(Pens.Black, rect);
+                rect.Width -= 2;
+                rect.Height -= 2;
+                rect.Offset(1, 1);
+                g.DrawRectangle(Pens.White, rect);
+            }
+            e.Row.Cells[1].Value = randomColor.ToArgb().ToString();
+            //e.Row.Cells[2].Value = string.Empty;
+            //e.Row.Cells[3].Value = byte.MinValue.ToString();
+            e.Row.Cells[4].Value = false;
+
+            string colorTooltip = $"{randomColor.R.ToString()}, {randomColor.G.ToString()}, {randomColor.B.ToString()}" +
+                    ((randomColor.IsNamedColor) ? $"\n({randomColor.ToKnownColor().ToString()})" : string.Empty);
+            e.Row.Cells[0].ToolTipText = colorTooltip;
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].IsNewRow && e.ColumnIndex == ColumnIcon.Index)
+            {
+                e.Value = plusImage;
             }
         }
     }
