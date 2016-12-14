@@ -77,7 +77,11 @@ namespace PieChartEffect
                 g.DrawRectangle(Pens.White, rect);
             }
 
+            string colorTooltip = $"{pnlColor.BackColor.R.ToString()}, {pnlColor.BackColor.G.ToString()}, {pnlColor.BackColor.B.ToString()}" +
+                ((pnlColor.BackColor.IsNamedColor) ? $"\n({pnlColor.BackColor.ToKnownColor().ToString()})" : string.Empty);
+
             dataGridView1.Rows.Add(new object[] { colorIcon, pnlColor.BackColor.ToArgb().ToString(), tbCategoryName.Text, tbCategoryValue.Text, checkBoxExploded.Checked });
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
 
             // Clear the fields for the next item
             tbCategoryName.Text = string.Empty;
@@ -328,7 +332,11 @@ namespace PieChartEffect
                     g.DrawRectangle(Pens.White, rect);
                 }
 
+                string colorTooltip = $"{slice.Color.R.ToString()}, {slice.Color.G.ToString()}, {slice.Color.B.ToString()}" +
+                    ((slice.Color.IsNamedColor) ? $"\n({slice.Color.ToKnownColor().ToString()})" : string.Empty);
+
                 dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.ToArgb().ToString(), slice.Name, slice.Value.ToString(), slice.Exploded });
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
             }
 
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
