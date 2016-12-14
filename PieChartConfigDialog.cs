@@ -376,6 +376,9 @@ namespace PieChartEffect
                     else
                         continue;
 
+                    if (value <= 0)
+                        continue;
+
                     randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
 
                     csvSlices.Add(new Slice(name, value, randomColor, false));
