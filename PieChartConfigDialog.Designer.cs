@@ -28,17 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBoxExploded = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pnlColor = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbCategoryValue = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbCategoryName = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -58,7 +47,6 @@
             this.radioBlack = new System.Windows.Forms.RadioButton();
             this.radioGray = new System.Windows.Forms.RadioButton();
             this.radioWhite = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBoxScale = new System.Windows.Forms.GroupBox();
             this.numericUpDownScale = new System.Windows.Forms.NumericUpDown();
@@ -66,7 +54,6 @@
             this.checkBoxLabels = new System.Windows.Forms.CheckBox();
             this.checkBoxDonut = new System.Windows.Forms.CheckBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBoxAngle.SuspendLayout();
@@ -77,133 +64,21 @@
             this.groupBoxStyle.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.checkBoxExploded);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.btnAdd);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.pnlColor);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.tbCategoryValue);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.tbCategoryName);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(260, 154);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Add Pie Chart Slice";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(228, 74);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "¿?";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // checkBoxExploded
-            // 
-            this.checkBoxExploded.AutoSize = true;
-            this.checkBoxExploded.Location = new System.Drawing.Point(74, 101);
-            this.checkBoxExploded.Name = "checkBoxExploded";
-            this.checkBoxExploded.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxExploded.TabIndex = 8;
-            this.checkBoxExploded.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Exploded:";
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(6, 125);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(248, 23);
-            this.btnAdd.TabIndex = 6;
-            this.btnAdd.Text = "Add Slice";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 78);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Color:";
-            // 
-            // pnlColor
-            // 
-            this.pnlColor.BackColor = System.Drawing.Color.Red;
-            this.pnlColor.Location = new System.Drawing.Point(74, 75);
-            this.pnlColor.Name = "pnlColor";
-            this.pnlColor.Size = new System.Drawing.Size(150, 20);
-            this.pnlColor.TabIndex = 4;
-            this.pnlColor.Click += new System.EventHandler(this.pnlColor_Click);
-            this.pnlColor.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlColor_Paint);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Value:";
-            // 
-            // tbCategoryValue
-            // 
-            this.tbCategoryValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCategoryValue.Location = new System.Drawing.Point(74, 47);
-            this.tbCategoryValue.Name = "tbCategoryValue";
-            this.tbCategoryValue.Size = new System.Drawing.Size(180, 22);
-            this.tbCategoryValue.TabIndex = 2;
-            this.tbCategoryValue.TextChanged += new System.EventHandler(this.tbCategoryValue_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name:";
-            // 
-            // tbCategoryName
-            // 
-            this.tbCategoryName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCategoryName.Location = new System.Drawing.Point(74, 19);
-            this.tbCategoryName.Name = "tbCategoryName";
-            this.tbCategoryName.Size = new System.Drawing.Size(180, 22);
-            this.tbCategoryName.TabIndex = 0;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.button2);
             this.groupBox3.Controls.Add(this.dataGridView1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 186);
+            this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(260, 164);
+            this.groupBox3.Size = new System.Drawing.Size(260, 338);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pie Chart Slices";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 135);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.Location = new System.Drawing.Point(6, 309);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 12;
@@ -230,7 +105,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(248, 112);
+            this.dataGridView1.Size = new System.Drawing.Size(248, 286);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -410,14 +285,6 @@
             this.radioWhite.UseVisualStyleBackColor = true;
             this.radioWhite.CheckedChanged += new System.EventHandler(this.radioWhite_CheckedChanged);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel1.Location = new System.Drawing.Point(12, 176);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(260, 1);
-            this.panel1.TabIndex = 7;
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -515,11 +382,9 @@
             this.Controls.Add(this.groupBoxStyle);
             this.Controls.Add(this.groupBoxScale);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBoxAngle);
             this.Controls.Add(this.groupBoxOutline);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -528,8 +393,6 @@
             this.Name = "PieChartConfigDialog";
             this.Text = "Pie Chart";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.helpButtonClicked);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBoxAngle.ResumeLayout(false);
@@ -545,15 +408,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel pnlColor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbCategoryValue;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbCategoryName;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBoxAngle;
         private System.Windows.Forms.NumericUpDown txtAngle1;
@@ -565,9 +419,6 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.CheckBox checkBoxExploded;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBoxScale;
         private System.Windows.Forms.NumericUpDown numericUpDownScale;
@@ -581,7 +432,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnExploded;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }

@@ -30,7 +30,6 @@ namespace PieChartEffect
                 if (prop.PropertyType.Name == "Color" && prop.Name != "Transparent")
                     colorList.Add(prop.Name);
             }
-            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
         }
 
         public void helpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -38,70 +37,6 @@ namespace PieChartEffect
             e.Cancel = true;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PieChartConfigDialog));
             MessageBox.Show(resources.GetString("Help"), "Pie Chart - Help");
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            // Make sure there's a category name
-            if (string.IsNullOrEmpty(tbCategoryName.Text))
-            {
-                tbCategoryName.Focus();
-                return;
-            }
-
-            double d;
-            if (!double.TryParse(tbCategoryValue.Text, out d))
-            {
-                MessageBox.Show(this, "Slice values must be numerical", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tbCategoryValue.Focus();
-                return;
-            }
-
-            // Ensure that the values are > 0.0
-            if (d <= 0.0)
-            {
-                MessageBox.Show(this, "Slice values must be greater 0.0", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tbCategoryValue.Focus();
-                return;
-            }
-
-            Bitmap colorIcon = new Bitmap(iconSize, iconSize);
-            using (Graphics g = Graphics.FromImage(colorIcon))
-            using (SolidBrush color = new SolidBrush(pnlColor.BackColor))
-            {
-                Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
-                g.FillRectangle(color, g.ClipBounds);
-                rect.Width--;
-                rect.Height--;
-                g.DrawRectangle(Pens.Black, rect);
-                rect.Width -= 2;
-                rect.Height -= 2;
-                rect.Offset(1, 1);
-                g.DrawRectangle(Pens.White, rect);
-            }
-
-            string colorTooltip = $"{pnlColor.BackColor.R.ToString()}, {pnlColor.BackColor.G.ToString()}, {pnlColor.BackColor.B.ToString()}" +
-                ((pnlColor.BackColor.IsNamedColor) ? $"\n({pnlColor.BackColor.ToKnownColor().ToString()})" : string.Empty);
-
-            dataGridView1.Rows.Add(new object[] { colorIcon, pnlColor.BackColor.ToArgb().ToString(), tbCategoryName.Text, tbCategoryValue.Text, checkBoxExploded.Checked });
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].ToolTipText = colorTooltip;
-
-            // Clear the fields for the next item
-            tbCategoryName.Text = string.Empty;
-            tbCategoryValue.Text = string.Empty;
-            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
-            checkBoxExploded.Checked = false;
-
-            // Focus back on the name box
-            tbCategoryName.Focus();
-        }
-
-        private void pnlColor_Click(object sender, EventArgs e)
-        {
-            if (DialogResult.OK == colorDialog1.ShowDialog())
-            {
-                pnlColor.BackColor = colorDialog1.Color;
-            }
         }
 
         private void angleSelector1_AngleChanged()
@@ -303,25 +238,6 @@ namespace PieChartEffect
             swatchRect.Offset(1, 1);
             g.DrawRectangle(Pens.White, swatchRect);
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            pnlColor.BackColor = Color.FromName(colorList[random.Next(colorList.Count)]);
-        }
-
-        private void tbCategoryValue_TextChanged(object sender, EventArgs e)
-        {
-            if (tbCategoryValue.Text != string.Empty)
-            {
-                double d;
-                if (!double.TryParse(tbCategoryValue.Text, out d))
-                {
-                    tbCategoryValue.BackColor = Color.Pink;
-                    return;
-                }
-            }
-            tbCategoryValue.BackColor = SystemColors.Window;
-        }
         #endregion
 
         #region EffectConfigDialog stuff
@@ -332,11 +248,6 @@ namespace PieChartEffect
 
         protected override void InitDialogFromToken(PieChartConfigToken effectTokenCopy)
         {
-            // Start by clearing the data on the form
-            tbCategoryName.Name = string.Empty;
-            tbCategoryValue.Name = string.Empty;
-            checkBoxExploded.Checked = false;
-
             #region DataGridView
             dataGridView1.RowsAdded -= dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
