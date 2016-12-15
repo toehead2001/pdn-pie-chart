@@ -170,6 +170,9 @@ namespace PieChartEffect
             if (e.Effect == DragDropEffects.Move)
             {
                 DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+                if (rowToMove == null)
+                    return;
+
                 dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
                 dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 
