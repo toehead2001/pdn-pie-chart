@@ -16,7 +16,7 @@ namespace PieChartEffect
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
         private string oldCellValue;
-        private readonly Image plusImage = new Bitmap(typeof(PieChartConfigDialog), "Plus.png");
+        private Image newRowImage;
 
         public PieChartConfigDialog()
         {
@@ -24,6 +24,22 @@ namespace PieChartEffect
 
             float dpi = this.AutoScaleDimensions.Width / 96f;
             iconSize = (int)(16f * dpi);
+
+            newRowImage = new Bitmap(iconSize, iconSize);
+            using (Graphics g = Graphics.FromImage(newRowImage))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                PointF[] arrow = new PointF[7];
+                arrow[0] = new PointF(8f * dpi, 1f * dpi);
+                arrow[1] = new PointF(15f * dpi, 7f * dpi);
+                arrow[2] = new PointF(8f * dpi, 13f * dpi);
+                arrow[3] = new PointF(8f * dpi, 9f * dpi);
+                arrow[4] = new PointF(1f * dpi, 9f * dpi);
+                arrow[5] = new PointF(1f * dpi, 5f * dpi);
+                arrow[6] = new PointF(8f * dpi, 5f * dpi);
+
+                g.FillPolygon(Brushes.Black, arrow);
+            }
 
             foreach (var prop in typeof(Color).GetProperties())
             {
@@ -522,7 +538,7 @@ namespace PieChartEffect
         {
             if (dataGridView1.Rows[e.RowIndex].IsNewRow && e.ColumnIndex == ColumnIcon.Index)
             {
-                e.Value = plusImage;
+                e.Value = newRowImage;
             }
         }
 
