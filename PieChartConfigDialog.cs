@@ -477,6 +477,9 @@ namespace PieChartEffect
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             if (e.ColumnIndex == ColumnIcon.Index && !dataGridView1.Rows[e.RowIndex].IsNewRow)
             {
                 if (DialogResult.OK != colorDialog1.ShowDialog())
@@ -544,6 +547,9 @@ namespace PieChartEffect
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             if (e.ColumnIndex == ColumnIcon.Index && !dataGridView1.Rows[e.RowIndex].IsNewRow)
             {
                 Color randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
