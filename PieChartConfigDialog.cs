@@ -147,6 +147,8 @@ namespace PieChartEffect
 
             // Get the row index of the item the mouse is below. 
             rowIndexOfItemUnderMouseToDrop = dataGridView1.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+            if (rowIndexOfItemUnderMouseToDrop == dataGridView1.Rows.Count - 1 || rowIndexOfItemUnderMouseToDrop == -1)
+                return;
 
             // If the drag operation was a move then remove and insert the row.
             if (e.Effect == DragDropEffects.Move)
@@ -155,6 +157,8 @@ namespace PieChartEffect
                 dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
                 dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[rowIndexOfItemUnderMouseToDrop].Selected = true;
             }
         }
 
