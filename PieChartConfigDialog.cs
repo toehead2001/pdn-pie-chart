@@ -321,7 +321,7 @@ namespace PieChartEffect
                     ((slice.Color.IsKnownColor) ? $"\n({slice.Color.Name})" : string.Empty);
 
                 dataGridView1.Rows.Add(new object[] { colorIcon, colorName, slice.Name, slice.Value.ToString(), slice.Exploded });
-                dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].ToolTipText = colorTooltip;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[ColumnIcon.Index].ToolTipText = colorTooltip;
             }
 
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
@@ -371,12 +371,12 @@ namespace PieChartEffect
                 if (row.IsNewRow)
                     continue;
 
-                Color color = Color.FromName((string)row.Cells[1].Value);
+                Color color = Color.FromName((string)row.Cells[ColumnColor.Index].Value);
                 if (!color.IsKnownColor)
-                    color = Color.FromArgb(Convert.ToInt32((string)row.Cells[1].Value));
-                string name = (string)row.Cells[2].Value;
-                double value = Convert.ToDouble((string)row.Cells[3].Value);
-                bool exploded = (bool)row.Cells[4].Value;
+                    color = Color.FromArgb(Convert.ToInt32((string)row.Cells[ColumnColor.Index].Value));
+                string name = (string)row.Cells[ColumnName.Index].Value;
+                double value = Convert.ToDouble((string)row.Cells[ColumnValue.Index].Value);
+                bool exploded = (bool)row.Cells[ColumnExploded.Index].Value;
 
                 writeValuesHere.Slices.Add(new Slice(name, value, color, exploded));
             }
@@ -451,7 +451,7 @@ namespace PieChartEffect
                     ((slice.Color.IsKnownColor) ? $"\n({slice.Color.Name})" : string.Empty);
 
                 dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.Name, slice.Name, slice.Value.ToString(), slice.Exploded });
-                dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].ToolTipText = colorTooltip;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[ColumnIcon.Index].ToolTipText = colorTooltip;
             }
 
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
@@ -485,7 +485,7 @@ namespace PieChartEffect
                     colorName = colorDialog1.Color.Name;
                 else
                     colorName = colorDialog1.Color.ToArgb().ToString();
-                dataGridView1.Rows[e.RowIndex].Cells[1].Value = colorName;
+                dataGridView1.Rows[e.RowIndex].Cells[ColumnColor.Index].Value = colorName;
 
                 string colorTooltip = $"{colorDialog1.Color.R.ToString()}, {colorDialog1.Color.G.ToString()}, {colorDialog1.Color.B.ToString()}" +
                     ((colorDialog1.Color.IsKnownColor) ? $"\n({colorDialog1.Color.Name})" : string.Empty);
@@ -498,8 +498,8 @@ namespace PieChartEffect
         private void dataGridView1_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
         {
             Color randomColor = Color.FromName(colorList[random.Next(colorList.Count)]);
-            e.Row.Cells[0].Value = new Bitmap(iconSize, iconSize);
-            using (Graphics g = Graphics.FromImage((Bitmap)e.Row.Cells[0].Value))
+            e.Row.Cells[ColumnIcon.Index].Value = new Bitmap(iconSize, iconSize);
+            using (Graphics g = Graphics.FromImage((Bitmap)e.Row.Cells[ColumnIcon.Index].Value))
             using (SolidBrush color = new SolidBrush(randomColor))
             {
                 Rectangle rect = new Rectangle((int)g.VisibleClipBounds.X, (int)g.VisibleClipBounds.Y, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height);
@@ -512,10 +512,10 @@ namespace PieChartEffect
                 rect.Offset(1, 1);
                 g.DrawRectangle(Pens.White, rect);
             }
-            e.Row.Cells[1].Value = randomColor.Name;
-            //e.Row.Cells[2].Value = string.Empty;
-            //e.Row.Cells[3].Value = byte.MinValue.ToString();
-            e.Row.Cells[4].Value = false;
+            e.Row.Cells[ColumnColor.Index].Value = randomColor.Name;
+            //e.Row.Cells[ColumnName.Index].Value = string.Empty;
+            //e.Row.Cells[ColumnValue.Index].Value = byte.MinValue.ToString();
+            e.Row.Cells[ColumnExploded.Index].Value = false;
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -545,7 +545,7 @@ namespace PieChartEffect
                     g.DrawRectangle(Pens.White, rect);
                 }
 
-                dataGridView1.Rows[e.RowIndex].Cells[1].Value = randomColor.Name;
+                dataGridView1.Rows[e.RowIndex].Cells[ColumnColor.Index].Value = randomColor.Name;
                 string colorTooltip = $"{randomColor.R.ToString()}, {randomColor.G.ToString()}, {randomColor.B.ToString()}" +
                     ((randomColor.IsKnownColor) ? $"\n({randomColor.Name})" : string.Empty);
                 dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = colorTooltip;
