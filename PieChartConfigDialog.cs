@@ -196,9 +196,17 @@ namespace PieChartEffect
             double d;
             string newCellValue;
 
-            newCellValue = (string)dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value;
+            if (dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value != null)
+                newCellValue = dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value.ToString();
+            else
+                newCellValue = string.Empty;
+
             if (!double.TryParse(newCellValue, out d))
-                dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value = "1";
+                d = 1;
+            else if (d <= 0)
+                d = 1;
+            dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnValue.Index].Value = d;
+
 
             newCellValue = (string)dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnName.Index].Value;
             if (newCellValue == string.Empty || newCellValue == null)
@@ -230,20 +238,14 @@ namespace PieChartEffect
             }
         }
 
-        private void dataGridView1_NumberSort(object sender, DataGridViewSortCompareEventArgs e)
-        {
-            if (e.Column.Index == ColumnValue.Index)
-            {
-                e.SortResult = double.Parse(e.CellValue1.ToString()).CompareTo(double.Parse(e.CellValue2.ToString()));
-                e.Handled = true;//pass by the default sorting
-            }
-        }
-
         private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (e.ColumnIndex == ColumnValue.Index || e.ColumnIndex == ColumnName.Index)
             {
-                oldCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                    oldCellValue = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                else
+                    oldCellValue = string.Empty;
             }
         }
 
@@ -252,26 +254,28 @@ namespace PieChartEffect
             if (e.ColumnIndex == ColumnValue.Index)
             {
                 double d;
-                string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                string newCellValue;
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                    newCellValue = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                else
+                    newCellValue = string.Empty;
+
+                if (oldCellValue == string.Empty)
+                    oldCellValue = "1";
+
                 if (!double.TryParse(newCellValue, out d))
-                {
-                    if (oldCellValue == string.Empty || oldCellValue == null)
-                        oldCellValue = "1";
-                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
-                }
+                    d = double.Parse(oldCellValue);
                 else if (d <= 0)
-                {
-                    if (oldCellValue == string.Empty || oldCellValue == null)
-                        oldCellValue = "1";
-                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
-                }
+                    d = double.Parse(oldCellValue);
+
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = d;
             }
             else if (e.ColumnIndex == ColumnName.Index)
             {
                 string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (newCellValue == string.Empty || newCellValue == null)
                 {
-                    if (oldCellValue == string.Empty || oldCellValue == null)
+                    if (oldCellValue == string.Empty)
                         oldCellValue = $"New Slice {e.RowIndex}";
                     dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
                 }
@@ -339,7 +343,7 @@ namespace PieChartEffect
                 string colorTooltip = $"{slice.Color.R.ToString()}, {slice.Color.G.ToString()}, {slice.Color.B.ToString()}" +
                     ((slice.Color.IsKnownColor) ? $"\n({slice.Color.Name})" : string.Empty);
 
-                dataGridView1.Rows.Add(new object[] { colorIcon, colorName, slice.Name, slice.Value.ToString(), slice.Exploded });
+                dataGridView1.Rows.Add(new object[] { colorIcon, colorName, slice.Name, slice.Value, slice.Exploded });
                 dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[ColumnIcon.Index].ToolTipText = colorTooltip;
             }
 
@@ -394,7 +398,7 @@ namespace PieChartEffect
                 if (!color.IsKnownColor)
                     color = Color.FromArgb(Convert.ToInt32((string)row.Cells[ColumnColor.Index].Value));
                 string name = (string)row.Cells[ColumnName.Index].Value;
-                double value = Convert.ToDouble((string)row.Cells[ColumnValue.Index].Value);
+                double value = (double)row.Cells[ColumnValue.Index].Value;
                 bool exploded = (bool)row.Cells[ColumnExploded.Index].Value;
 
                 writeValuesHere.Slices.Add(new Slice(name, value, color, exploded));
@@ -469,7 +473,7 @@ namespace PieChartEffect
                 string colorTooltip = $"{slice.Color.R.ToString()}, {slice.Color.G.ToString()}, {slice.Color.B.ToString()}" +
                     ((slice.Color.IsKnownColor) ? $"\n({slice.Color.Name})" : string.Empty);
 
-                dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.Name, slice.Name, slice.Value.ToString(), slice.Exploded });
+                dataGridView1.Rows.Add(new object[] { colorIcon, slice.Color.Name, slice.Name, slice.Value, slice.Exploded });
                 dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[ColumnIcon.Index].ToolTipText = colorTooltip;
             }
 
@@ -536,7 +540,7 @@ namespace PieChartEffect
             }
             e.Row.Cells[ColumnColor.Index].Value = randomColor.Name;
             //e.Row.Cells[ColumnName.Index].Value = string.Empty;
-            //e.Row.Cells[ColumnValue.Index].Value = byte.MinValue.ToString();
+            //e.Row.Cells[ColumnValue.Index].Value = byte.MinValue;
             e.Row.Cells[ColumnExploded.Index].Value = false;
         }
 
