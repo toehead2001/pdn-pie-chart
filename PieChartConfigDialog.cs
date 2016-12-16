@@ -22,6 +22,8 @@ namespace PieChartEffect
         {
             InitializeComponent();
 
+            this.ColumnValue.DefaultCellStyle.Alignment= DataGridViewContentAlignment.MiddleRight;
+
             float dpi = this.AutoScaleDimensions.Width / 96f;
             iconSize = (int)(16f * dpi);
 
