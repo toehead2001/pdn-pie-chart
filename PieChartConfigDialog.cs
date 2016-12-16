@@ -175,11 +175,15 @@ namespace PieChartEffect
                 if (rowToMove == null)
                     return;
 
+                dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
                 dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
+                dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
                 dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 
                 dataGridView1.ClearSelection();
                 dataGridView1.Rows[rowIndexOfItemUnderMouseToDrop].Selected = true;
+
+                FinishTokenUpdate();
             }
         }
 
@@ -353,8 +357,14 @@ namespace PieChartEffect
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
             #endregion
 
+            txtAngle1.ValueChanged -= txtAngle1_ValueChanged;
             txtAngle1.Value = (decimal)effectTokenCopy.Angle;
+            txtAngle1.ValueChanged += txtAngle1_ValueChanged;
 
+            radioNone.CheckedChanged -= radioNone_CheckedChanged;
+            radioWhite.CheckedChanged -= radioWhite_CheckedChanged;
+            radioGray.CheckedChanged -= radioGray_CheckedChanged;
+            radioBlack.CheckedChanged -= radioBlack_CheckedChanged;
             if (effectTokenCopy.OutlineColor == Color.Transparent)
                 radioNone.Checked = true;
             else if (effectTokenCopy.OutlineColor == Color.White)
@@ -363,12 +373,22 @@ namespace PieChartEffect
                 radioGray.Checked = true;
             else
                 radioBlack.Checked = true;
+            radioNone.CheckedChanged += radioNone_CheckedChanged;
+            radioWhite.CheckedChanged += radioWhite_CheckedChanged;
+            radioGray.CheckedChanged += radioGray_CheckedChanged;
+            radioBlack.CheckedChanged += radioBlack_CheckedChanged;
 
+            numericUpDownScale.ValueChanged -= numericUpDown1_ValueChanged;
             numericUpDownScale.Value = (decimal)effectTokenCopy.Scale;
+            numericUpDownScale.ValueChanged += numericUpDown1_ValueChanged;
 
+            checkBoxDonut.CheckedChanged -= checkBoxDonut_CheckedChanged;
             checkBoxDonut.Checked = effectTokenCopy.Donut;
+            checkBoxDonut.CheckedChanged += checkBoxDonut_CheckedChanged;
 
+            checkBoxLabels.CheckedChanged -= checkBoxLabels_CheckedChanged;
             checkBoxLabels.Checked = effectTokenCopy.Labels;
+            checkBoxLabels.CheckedChanged += checkBoxLabels_CheckedChanged;
         }
 
         protected override void LoadIntoTokenFromDialog(PieChartConfigToken writeValuesHere)
