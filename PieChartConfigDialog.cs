@@ -75,6 +75,21 @@ namespace PieChartEffect
             FinishTokenUpdate();
         }
 
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            numericUpDownScale.Value = (decimal)(trackBar1.Value / 100f);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            numericUpDownScale.Value = 1;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            txtAngle1.Value = 0;
+        }
+
         private void radioNone_CheckedChanged(object sender, EventArgs e)
         {
             FinishTokenUpdate();
@@ -97,6 +112,8 @@ namespace PieChartEffect
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            trackBar1.Value = (int)(numericUpDownScale.Value * 100);
+
             FinishTokenUpdate();
         }
 

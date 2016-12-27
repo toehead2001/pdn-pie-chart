@@ -60,6 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PieChart.png" />
+    <EmbeddedResource Include="PieChartConfigDialog.resx">
+      <DependentUpon>PieChartConfigDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AngleControl.cs">
@@ -74,11 +81,11 @@
     </Compile>
     <Compile Include="PieChartConfigToken.cs" />
     <Compile Include="PieChart.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PieChartConfigDialog.resx">
-      <DependentUpon>PieChartConfigDialog.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
