@@ -23,7 +23,6 @@ namespace PieChartEffect
             InitializeComponent();
 
             this.ColumnValue.DefaultCellStyle.Alignment= DataGridViewContentAlignment.MiddleRight;
-            this.comboBox1.SelectedIndex = 1;
 
             float dpi = this.AutoScaleDimensions.Width / 96f;
             iconSize = (int)(16f * dpi);
@@ -384,6 +383,7 @@ namespace PieChartEffect
             txtAngle1.ValueChanged -= txtAngle1_ValueChanged;
             txtAngle1.Value = (decimal)effectTokenCopy.Angle;
             txtAngle1.ValueChanged += txtAngle1_ValueChanged;
+            angleSelector1.Angle = (double)txtAngle1.Value;
 
             comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
             if (effectTokenCopy.OutlineColor == Color.Transparent)
@@ -399,6 +399,7 @@ namespace PieChartEffect
             numericUpDownScale.ValueChanged -= numericUpDown1_ValueChanged;
             numericUpDownScale.Value = (decimal)effectTokenCopy.Scale;
             numericUpDownScale.ValueChanged += numericUpDown1_ValueChanged;
+            trackBar1.Value = (int)(numericUpDownScale.Value * 100);
 
             checkBoxDonut.CheckedChanged -= checkBoxDonut_CheckedChanged;
             checkBoxDonut.Checked = effectTokenCopy.Donut;
@@ -408,7 +409,10 @@ namespace PieChartEffect
             numericUpDown1.Enabled = checkBoxDonut.Checked;
             button4.Enabled = checkBoxDonut.Checked;
 
+            numericUpDown1.ValueChanged -= numericUpDown1_ValueChanged_1;
             numericUpDown1.Value = (decimal)effectTokenCopy.DonutSize;
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged_1;
+            trackBar2.Value = (int)(numericUpDown1.Value * 100);
 
             checkBoxLabels.CheckedChanged -= checkBoxLabels_CheckedChanged;
             checkBoxLabels.Checked = effectTokenCopy.Labels;
