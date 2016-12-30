@@ -133,11 +133,11 @@ namespace PieChartEffect
 
             Bitmap pieChartBitmap = new Bitmap(selection.Width, selection.Height);
             Graphics pieChartGraphics = Graphics.FromImage(pieChartBitmap);
-            pieChartGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            pieChartGraphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             Bitmap overlayBitmap = new Bitmap(selection.Width, selection.Height);
             Graphics overlayGraphics = Graphics.FromImage(overlayBitmap);
-            overlayGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            overlayGraphics.SmoothingMode = SmoothingMode.AntiAlias;
             overlayGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
 
@@ -261,7 +261,7 @@ namespace PieChartEffect
                 Bitmap donutBitmap = new Bitmap(selection.Width, selection.Height);
                 using (Graphics donutGraphics = Graphics.FromImage(donutBitmap))
                 {
-                    donutGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    donutGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                     donutGraphics.FillEllipse(Brushes.Black, donutXOffset, donutYOffset, donutDiameter, donutDiameter);
                 }
                 donutHelperSurface = Surface.CopyFromBitmap(donutBitmap);
