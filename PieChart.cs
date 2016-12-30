@@ -119,7 +119,7 @@ namespace PieChartEffect
             }
 
 
-            float baseDiameter = (selection.Width <= selection.Height) ? (selection.Width - 4) * scale : (selection.Height - 4) * scale;
+            float baseDiameter = Math.Min((selection.Width - 4) * scale, (selection.Height - 4) * scale);
 
             float regDiameter = anyExplosions ? baseDiameter - (baseDiameter / 10f) : baseDiameter;
             float expDiameter = baseDiameter;
@@ -130,11 +130,11 @@ namespace PieChartEffect
             float expYOffset = regYOffset - (expDiameter / 20f);
 
 
-            Bitmap pieChartBitmap = new Bitmap(selection.Width, selection.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap pieChartBitmap = new Bitmap(selection.Width, selection.Height);
             Graphics pieChartGraphics = Graphics.FromImage(pieChartBitmap);
             pieChartGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            Bitmap overlayBitmap = new Bitmap(selection.Width, selection.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap overlayBitmap = new Bitmap(selection.Width, selection.Height);
             Graphics overlayGraphics = Graphics.FromImage(overlayBitmap);
             overlayGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             overlayGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -152,8 +152,7 @@ namespace PieChartEffect
             }
 
             // Draw the pie chart
-            angle = angle > 0 ? -angle : Math.Abs(angle);
-            float start = angle;
+            float start = angle * -1;
             float sweep = 0.0f;
             SolidBrush sliceBrush = new SolidBrush(Color.Black);
             Pen outlinePen = new Pen(outlineColor, 1);
@@ -242,6 +241,7 @@ namespace PieChartEffect
             sliceBrush.Dispose();
             labelBrush.Dispose();
             labelBrush2.Dispose();
+            labelFormat.Dispose();
             labelFont.Dispose();
 
 
@@ -266,27 +266,30 @@ namespace PieChartEffect
                     }
                 }
 
-                Bitmap donutBitmap = new Bitmap(selection.Width, selection.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                Graphics donutGraphics = Graphics.FromImage(donutBitmap);
-                donutGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                using (Brush donutBrush = new SolidBrush(Color.Black))
-                    donutGraphics.FillEllipse(donutBrush, donutXOffset, donutYOffset, donutDiameter, donutDiameter);
+                Bitmap donutBitmap = new Bitmap(selection.Width, selection.Height);
+                using (Graphics donutGraphics = Graphics.FromImage(donutBitmap))
+                {
+                    donutGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    donutGraphics.FillEllipse(Brushes.Black, donutXOffset, donutYOffset, donutDiameter, donutDiameter);
+                }
                 donutHelperSurface = Surface.CopyFromBitmap(donutBitmap);
                 donutBitmap.Dispose();
             }
 
             pieChartSurface = Surface.CopyFromBitmap(pieChartBitmap);
+            pieChartGraphics.Dispose();
             pieChartBitmap.Dispose();
             overlaySurface = Surface.CopyFromBitmap(overlayBitmap);
+            overlayGraphics.Dispose();
             overlayBitmap.Dispose();
         }
 
-        protected override void OnRender(Rectangle[] rois, int startIndex, int length)
+        protected override void OnRender(Rectangle[] renderRects, int startIndex, int length)
         {
             if (length == 0) return;
             for (int i = startIndex; i < startIndex + length; ++i)
             {
-                Render(DstArgs.Surface, SrcArgs.Surface, rois[i]);
+                Render(DstArgs.Surface, SrcArgs.Surface, renderRects[i]);
             }
         }
 
@@ -298,11 +301,11 @@ namespace PieChartEffect
         float donutSize;
         bool labels;
 
-        private Surface pieChartSurface;
-        private Surface overlaySurface;
-        private Surface donutHelperSurface;
+        Surface pieChartSurface;
+        Surface overlaySurface;
+        Surface donutHelperSurface;
 
-        private BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
+        BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
@@ -313,10 +316,10 @@ namespace PieChartEffect
             for (int y = rect.Top; y < rect.Bottom; y++)
             {
                 if (IsCancelRequested) return;
+                int y2 = y - selection.Top;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
                     int x2 = x - selection.Left;
-                    int y2 = y - selection.Top;
 
                     piePixel = pieChartSurface.GetBilinearSample(x2, y2);
                     if (donut)
