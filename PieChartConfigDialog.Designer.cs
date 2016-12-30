@@ -33,6 +33,11 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -60,6 +65,8 @@
             this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIcon = new System.Windows.Forms.DataGridViewImageColumn();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAngle1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -97,6 +104,11 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPage2.Controls.Add(this.button4);
+            this.tabPage2.Controls.Add(this.numericUpDown1);
+            this.tabPage2.Controls.Add(this.trackBar2);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.panel5);
             this.tabPage2.Controls.Add(this.comboBox1);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.panel4);
@@ -121,6 +133,78 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Options";
             // 
+            // button4
+            // 
+            this.button4.Image = global::PieChartEffect.Properties.Resources.Reset;
+            this.button4.Location = new System.Drawing.Point(306, 240);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(18, 19);
+            this.button4.TabIndex = 27;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DecimalPlaces = 2;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numericUpDown1.Location = new System.Drawing.Point(240, 238);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            75,
+            0,
+            0,
+            131072});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            131072});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 22);
+            this.numericUpDown1.TabIndex = 25;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            33,
+            0,
+            0,
+            131072});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged_1);
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.AutoSize = false;
+            this.trackBar2.LargeChange = 25;
+            this.trackBar2.Location = new System.Drawing.Point(6, 238);
+            this.trackBar2.Maximum = 75;
+            this.trackBar2.Minimum = 25;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(228, 24);
+            this.trackBar2.SmallChange = 5;
+            this.trackBar2.TabIndex = 26;
+            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar2.Value = 33;
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 194);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Donut";
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel5.Location = new System.Drawing.Point(14, 199);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(310, 1);
+            this.panel5.TabIndex = 24;
+            // 
             // comboBox1
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -138,7 +222,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 194);
+            this.label4.Location = new System.Drawing.Point(6, 271);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 20;
@@ -147,7 +231,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel4.Location = new System.Drawing.Point(14, 199);
+            this.panel4.Location = new System.Drawing.Point(14, 276);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(310, 1);
             this.panel4.TabIndex = 21;
@@ -155,7 +239,7 @@
             // checkBoxLabels
             // 
             this.checkBoxLabels.AutoSize = true;
-            this.checkBoxLabels.Location = new System.Drawing.Point(9, 238);
+            this.checkBoxLabels.Location = new System.Drawing.Point(9, 292);
             this.checkBoxLabels.Name = "checkBoxLabels";
             this.checkBoxLabels.Size = new System.Drawing.Size(58, 17);
             this.checkBoxLabels.TabIndex = 1;
@@ -168,9 +252,9 @@
             this.checkBoxDonut.AutoSize = true;
             this.checkBoxDonut.Location = new System.Drawing.Point(9, 215);
             this.checkBoxDonut.Name = "checkBoxDonut";
-            this.checkBoxDonut.Size = new System.Drawing.Size(59, 17);
+            this.checkBoxDonut.Size = new System.Drawing.Size(81, 17);
             this.checkBoxDonut.TabIndex = 0;
-            this.checkBoxDonut.Text = "Donut";
+            this.checkBoxDonut.Text = "Use Donut";
             this.checkBoxDonut.UseVisualStyleBackColor = true;
             this.checkBoxDonut.CheckedChanged += new System.EventHandler(this.checkBoxDonut_CheckedChanged);
             // 
@@ -445,6 +529,8 @@
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.helpButtonClicked);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAngle1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -487,5 +573,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnExploded;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TrackBar trackBar2;
     }
 }

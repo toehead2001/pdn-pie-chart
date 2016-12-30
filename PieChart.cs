@@ -94,6 +94,7 @@ namespace PieChartEffect
             outlineColor = newToken.OutlineColor;
             scale = newToken.Scale;
             donut = newToken.Donut;
+            donutSize = newToken.DonutSize;
             labels = newToken.Labels;
 
 
@@ -247,7 +248,7 @@ namespace PieChartEffect
             // Donut Stuff
             if (donut)
             {
-                int donutDiameter = regDiameter / 3;
+                int donutDiameter = (int)(regDiameter * donutSize);
                 int donutXOffset = (selection.Width - donutDiameter) / 2;
                 int donutYOffset = (selection.Height - donutDiameter) / 2;
 
@@ -294,6 +295,7 @@ namespace PieChartEffect
         Color outlineColor;
         double scale;
         bool donut;
+        float donutSize;
         bool labels;
 
         private Surface pieChartSurface;

@@ -105,7 +105,28 @@ namespace PieChartEffect
 
         private void checkBoxDonut_CheckedChanged(object sender, EventArgs e)
         {
+            trackBar2.Enabled = checkBoxDonut.Checked;
+            numericUpDown1.Enabled = checkBoxDonut.Checked;
+            button4.Enabled = checkBoxDonut.Checked;
+
             FinishTokenUpdate();
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = (decimal)(trackBar2.Value / 100f);
+        }
+
+        private void numericUpDown1_ValueChanged_1(object sender, EventArgs e)
+        {
+            trackBar2.Value = (int)(numericUpDown1.Value * 100);
+
+            FinishTokenUpdate();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = 0.333m;
         }
 
         private void checkBoxLabels_CheckedChanged(object sender, EventArgs e)
@@ -383,6 +404,12 @@ namespace PieChartEffect
             checkBoxDonut.Checked = effectTokenCopy.Donut;
             checkBoxDonut.CheckedChanged += checkBoxDonut_CheckedChanged;
 
+            trackBar2.Enabled = checkBoxDonut.Checked;
+            numericUpDown1.Enabled = checkBoxDonut.Checked;
+            button4.Enabled = checkBoxDonut.Checked;
+
+            numericUpDown1.Value = (decimal)effectTokenCopy.DonutSize;
+
             checkBoxLabels.CheckedChanged -= checkBoxLabels_CheckedChanged;
             checkBoxLabels.Checked = effectTokenCopy.Labels;
             checkBoxLabels.CheckedChanged += checkBoxLabels_CheckedChanged;
@@ -411,6 +438,8 @@ namespace PieChartEffect
             writeValuesHere.Scale = (double)numericUpDownScale.Value;
 
             writeValuesHere.Donut = checkBoxDonut.Checked;
+
+            writeValuesHere.DonutSize = (float)numericUpDown1.Value;
 
             writeValuesHere.Labels = checkBoxLabels.Checked;
 

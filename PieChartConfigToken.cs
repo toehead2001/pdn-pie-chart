@@ -11,6 +11,7 @@ namespace PieChartEffect
         Color outlineColor = Color.Black;
         double scale = 1;
         bool donut = false;
+        float donutSize = 0.333f;
         bool labels = false;
 
         public PieChartConfigToken() : base()
@@ -20,6 +21,7 @@ namespace PieChartEffect
             this.OutlineColor = outlineColor;
             this.Scale = scale;
             this.Donut = donut;
+            this.DonutSize = donutSize;
             this.Labels = labels;
         }
 
@@ -30,6 +32,7 @@ namespace PieChartEffect
             this.OutlineColor = copyMe.OutlineColor;
             this.Scale = copyMe.Scale;
             this.Donut = copyMe.Donut;
+            this.DonutSize = copyMe.DonutSize;
             this.Labels = copyMe.Labels;
         }
         
@@ -59,6 +62,11 @@ namespace PieChartEffect
             set;
         }
         public bool Donut
+        {
+            get;
+            set;
+        }
+        public float DonutSize
         {
             get;
             set;
