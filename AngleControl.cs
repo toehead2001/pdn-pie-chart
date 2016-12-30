@@ -16,6 +16,9 @@ namespace AngleControl
         private Rectangle drawRegion;
         private Point origin;
 
+        private float outlinePenWidth = 1.0f;
+        private float anglePenWidth = 1.6f;
+
         public AngleSelector()
         {
             InitializeComponent();
@@ -117,22 +120,20 @@ namespace AngleControl
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
-            Pen outline = new Pen(SystemColors.ControlDark, 2.0f);
-            SolidBrush fill = new SolidBrush(SystemColors.ControlLightLight);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             PointF anglePoint = DegreesToXY((float)angle, origin.X - 3, origin);
             Rectangle originSquare = new Rectangle(origin.X -3, origin.Y - 3, 6, 6);
 
             //Draw
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawEllipse(outline, drawRegion);
-            g.FillEllipse(fill, drawRegion);
-            g.DrawLine(new Pen(SystemColors.ControlDark, 2.0f), origin, anglePoint);
-            g.FillEllipse(new SolidBrush(SystemColors.ControlDark), originSquare);
-
-            fill.Dispose();
-            outline.Dispose();
+            using (SolidBrush fill = new SolidBrush(SystemColors.ControlLightLight))
+                g.FillEllipse(fill, drawRegion);
+            using (Pen outline = new Pen(SystemColors.ControlDark, outlinePenWidth))
+                g.DrawEllipse(outline, drawRegion);
+            using (Pen anglePen = new Pen(SystemColors.ControlDark, anglePenWidth))
+                g.DrawLine(anglePen, origin, anglePoint);
+            using (SolidBrush centerFill = new SolidBrush(SystemColors.ControlDark))
+                g.FillEllipse(centerFill, originSquare);
 
             base.OnPaint(e);
         }
@@ -185,8 +186,24 @@ namespace AngleControl
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AngleSelector_MouseMove);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AngleSelector_MouseDown);
             this.SizeChanged += new System.EventHandler(this.AngleSelector_SizeChanged);
+            this.MouseEnter += new System.EventHandler(this.AngleSelector_MouseEnter);
+            this.MouseLeave += new System.EventHandler(this.AngleSelector_MouseLeave);
             this.ResumeLayout(false);
 
+        }
+
+        private void AngleSelector_MouseEnter(object sender, EventArgs e)
+        {
+            outlinePenWidth = 1.6f;
+            anglePenWidth = 2.0f;
+            this.Refresh();
+        }
+
+        private void AngleSelector_MouseLeave(object sender, EventArgs e)
+        {
+            outlinePenWidth = 1.0f;
+            anglePenWidth = 1.6f;
+            this.Refresh();
         }
     }
 }
