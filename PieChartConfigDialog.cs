@@ -50,13 +50,6 @@ namespace PieChartEffect
             }
         }
 
-        public void helpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PieChartConfigDialog));
-            MessageBox.Show(resources.GetString("Help"), "Pie Chart - Help");
-        }
-
         private void angleSelector1_AngleChanged()
         {
             txtAngle1.Value = (decimal)angleSelector1.Angle;

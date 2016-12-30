@@ -521,12 +521,10 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HelpButton = true;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PieChartConfigDialog";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Pie Chart";
-            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.helpButtonClicked);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
