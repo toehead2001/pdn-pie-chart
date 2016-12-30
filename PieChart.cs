@@ -162,7 +162,7 @@ namespace PieChartEffect
             float yOffset;
 
             GraphicsPath labelPath = new GraphicsPath();
-            FontFamily labelFont = new FontFamily("Arial");
+            FontFamily labelFont = new FontFamily("Tahoma");
             Pen labelPen = new Pen(Color.FromArgb(153, Color.Black), 2.5f);
             StringFormat labelFormat = new StringFormat();
             labelFormat.Alignment = StringAlignment.Center;
@@ -217,7 +217,7 @@ namespace PieChartEffect
                         labelOffset.Y = yCenter - selection.Top + (float)(labelRadius * Math.Sin(labelAngle));
 
                         labelPath.Reset();
-                        labelPath.AddString(slice.Name + "\n" + slice.Value, labelFont, (int)FontStyle.Bold, 16, labelOffset, labelFormat);
+                        labelPath.AddString(slice.Name + "\n" + slice.Value, labelFont, (int)FontStyle.Bold, 14, labelOffset, labelFormat);
                         overlayGraphics.DrawPath(labelPen, labelPath);
                         overlayGraphics.FillPath(Brushes.White, labelPath);
                     }
