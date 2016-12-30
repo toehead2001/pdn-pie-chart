@@ -3,6 +3,7 @@ using PaintDotNet.Effects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Reflection;
 
 namespace PieChartEffect
@@ -160,15 +161,14 @@ namespace PieChartEffect
             float xOffset;
             float yOffset;
 
-            Font labelFont = new Font(new FontFamily("Arial"), 12, FontStyle.Bold);
-            SolidBrush labelBrush = new SolidBrush(Color.White);
-            SolidBrush labelBrush2 = new SolidBrush(Color.FromArgb(75, Color.Black));
+            GraphicsPath labelPath = new GraphicsPath();
+            FontFamily labelFont = new FontFamily("Arial");
+            Pen labelPen = new Pen(Color.FromArgb(153, Color.Black), 2.5f);
             StringFormat labelFormat = new StringFormat();
             labelFormat.Alignment = StringAlignment.Center;
             labelFormat.LineAlignment = StringAlignment.Center;
             double labelAngle;
-            float labelXOffset;
-            float labelYOffset;
+            PointF labelOffset = new PointF();
             float labelRadius = (regDiameter / 2f) * 0.75f;
 
             try
@@ -211,21 +211,13 @@ namespace PieChartEffect
                     if (labels)
                     {
                         labelAngle = Math.PI * (start + sweep / 2f) / 180f;
-                        labelXOffset = xCenter - selection.Left + (float)(labelRadius * Math.Cos(labelAngle));
-                        labelYOffset = yCenter - selection.Top + (float)(labelRadius * Math.Sin(labelAngle));
+                        labelOffset.X = xCenter - selection.Left + (float)(labelRadius * Math.Cos(labelAngle));
+                        labelOffset.Y = yCenter - selection.Top + (float)(labelRadius * Math.Sin(labelAngle));
 
-                        // Hack to get a text outline
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset + 1, labelYOffset + 1, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset - 1, labelYOffset - 1, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset + 1, labelYOffset - 1, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset - 1, labelYOffset + 1, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset + 1, labelYOffset + 0, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset - 1, labelYOffset - 0, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset + 0, labelYOffset + 1, labelFormat);
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush2, labelXOffset - 0, labelYOffset - 1, labelFormat);
-
-                        // Actual Label text
-                        overlayGraphics.DrawString(slice.Name + "\n" + slice.Value.ToString(), labelFont, labelBrush, labelXOffset, labelYOffset, labelFormat);
+                        labelPath.Reset();
+                        labelPath.AddString(slice.Name + "\n" + slice.Value, labelFont, (int)FontStyle.Bold, 16, labelOffset, labelFormat);
+                        overlayGraphics.DrawPath(labelPen, labelPath);
+                        overlayGraphics.FillPath(Brushes.White, labelPath);
                     }
 
                     start += sweep;
@@ -239,8 +231,8 @@ namespace PieChartEffect
             // Clean up resources
             outlinePen.Dispose();
             sliceBrush.Dispose();
-            labelBrush.Dispose();
-            labelBrush2.Dispose();
+            labelPen.Dispose();
+            labelPath.Dispose();
             labelFormat.Dispose();
             labelFont.Dispose();
 
