@@ -23,6 +23,7 @@ namespace PieChartEffect
             InitializeComponent();
 
             this.ColumnValue.DefaultCellStyle.Alignment= DataGridViewContentAlignment.MiddleRight;
+            this.comboBox1.SelectedIndex = 1;
 
             float dpi = this.AutoScaleDimensions.Width / 96f;
             iconSize = (int)(16f * dpi);
@@ -90,22 +91,7 @@ namespace PieChartEffect
             txtAngle1.Value = 0;
         }
 
-        private void radioNone_CheckedChanged(object sender, EventArgs e)
-        {
-            FinishTokenUpdate();
-        }
-
-        private void radioBlack_CheckedChanged(object sender, EventArgs e)
-        {
-            FinishTokenUpdate();
-        }
-
-        private void radioGray_CheckedChanged(object sender, EventArgs e)
-        {
-            FinishTokenUpdate();
-        }
-
-        private void radioWhite_CheckedChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             FinishTokenUpdate();
         }
@@ -378,22 +364,16 @@ namespace PieChartEffect
             txtAngle1.Value = (decimal)effectTokenCopy.Angle;
             txtAngle1.ValueChanged += txtAngle1_ValueChanged;
 
-            radioNone.CheckedChanged -= radioNone_CheckedChanged;
-            radioWhite.CheckedChanged -= radioWhite_CheckedChanged;
-            radioGray.CheckedChanged -= radioGray_CheckedChanged;
-            radioBlack.CheckedChanged -= radioBlack_CheckedChanged;
+            comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
             if (effectTokenCopy.OutlineColor == Color.Transparent)
-                radioNone.Checked = true;
-            else if (effectTokenCopy.OutlineColor == Color.White)
-                radioWhite.Checked = true;
+                comboBox1.SelectedIndex = 0;
+            else if (effectTokenCopy.OutlineColor == Color.Black)
+                comboBox1.SelectedIndex = 1;
             else if (effectTokenCopy.OutlineColor == Color.FromArgb(68, 68, 68))
-                radioGray.Checked = true;
+                comboBox1.SelectedIndex = 2;
             else
-                radioBlack.Checked = true;
-            radioNone.CheckedChanged += radioNone_CheckedChanged;
-            radioWhite.CheckedChanged += radioWhite_CheckedChanged;
-            radioGray.CheckedChanged += radioGray_CheckedChanged;
-            radioBlack.CheckedChanged += radioBlack_CheckedChanged;
+                comboBox1.SelectedIndex = 3;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
 
             numericUpDownScale.ValueChanged -= numericUpDown1_ValueChanged;
             numericUpDownScale.Value = (decimal)effectTokenCopy.Scale;
@@ -412,14 +392,21 @@ namespace PieChartEffect
         {
             writeValuesHere.Angle = (double)txtAngle1.Value;
 
-            if (radioNone.Checked)
-                writeValuesHere.OutlineColor = Color.Transparent;
-            else if (radioWhite.Checked)
-                writeValuesHere.OutlineColor = Color.White;
-            else if (radioGray.Checked)
-                writeValuesHere.OutlineColor = Color.FromArgb(68, 68, 68);
-            else
-                writeValuesHere.OutlineColor = Color.Black;
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0:
+                    writeValuesHere.OutlineColor = Color.Transparent;
+                    break;
+                case 1:
+                    writeValuesHere.OutlineColor = Color.Black;
+                    break;
+                case 2:
+                    writeValuesHere.OutlineColor = Color.FromArgb(68, 68, 68);
+                    break;
+                case 3:
+                    writeValuesHere.OutlineColor = Color.White;
+                    break;
+            }
 
             writeValuesHere.Scale = (double)numericUpDownScale.Value;
 

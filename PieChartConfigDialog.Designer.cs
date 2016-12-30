@@ -33,6 +33,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.checkBoxLabels = new System.Windows.Forms.CheckBox();
@@ -41,11 +42,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.radioNone = new System.Windows.Forms.RadioButton();
-            this.radioBlack = new System.Windows.Forms.RadioButton();
-            this.radioGray = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.radioWhite = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -100,6 +97,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPage2.Controls.Add(this.comboBox1);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.panel4);
             this.tabPage2.Controls.Add(this.checkBoxLabels);
@@ -108,11 +106,7 @@
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.panel3);
-            this.tabPage2.Controls.Add(this.radioNone);
-            this.tabPage2.Controls.Add(this.radioBlack);
-            this.tabPage2.Controls.Add(this.radioGray);
             this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Controls.Add(this.radioWhite);
             this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button1);
@@ -127,10 +121,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Options";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Items.AddRange(new object[] {
+            "None",
+            "Black",
+            "Gray",
+            "White"});
+            this.comboBox1.Location = new System.Drawing.Point(9, 165);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 22;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 263);
+            this.label4.Location = new System.Drawing.Point(6, 194);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 20;
@@ -139,7 +147,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel4.Location = new System.Drawing.Point(14, 268);
+            this.panel4.Location = new System.Drawing.Point(14, 199);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(310, 1);
             this.panel4.TabIndex = 21;
@@ -147,7 +155,7 @@
             // checkBoxLabels
             // 
             this.checkBoxLabels.AutoSize = true;
-            this.checkBoxLabels.Location = new System.Drawing.Point(9, 307);
+            this.checkBoxLabels.Location = new System.Drawing.Point(9, 238);
             this.checkBoxLabels.Name = "checkBoxLabels";
             this.checkBoxLabels.Size = new System.Drawing.Size(58, 17);
             this.checkBoxLabels.TabIndex = 1;
@@ -158,7 +166,7 @@
             // checkBoxDonut
             // 
             this.checkBoxDonut.AutoSize = true;
-            this.checkBoxDonut.Location = new System.Drawing.Point(9, 284);
+            this.checkBoxDonut.Location = new System.Drawing.Point(9, 215);
             this.checkBoxDonut.Name = "checkBoxDonut";
             this.checkBoxDonut.Size = new System.Drawing.Size(59, 17);
             this.checkBoxDonut.TabIndex = 0;
@@ -201,42 +209,6 @@
             this.panel3.Size = new System.Drawing.Size(310, 1);
             this.panel3.TabIndex = 19;
             // 
-            // radioNone
-            // 
-            this.radioNone.AutoSize = true;
-            this.radioNone.Location = new System.Drawing.Point(6, 165);
-            this.radioNone.Name = "radioNone";
-            this.radioNone.Size = new System.Drawing.Size(53, 17);
-            this.radioNone.TabIndex = 3;
-            this.radioNone.TabStop = true;
-            this.radioNone.Text = "None";
-            this.radioNone.UseVisualStyleBackColor = true;
-            this.radioNone.CheckedChanged += new System.EventHandler(this.radioNone_CheckedChanged);
-            // 
-            // radioBlack
-            // 
-            this.radioBlack.AutoSize = true;
-            this.radioBlack.Location = new System.Drawing.Point(6, 188);
-            this.radioBlack.Name = "radioBlack";
-            this.radioBlack.Size = new System.Drawing.Size(52, 17);
-            this.radioBlack.TabIndex = 0;
-            this.radioBlack.TabStop = true;
-            this.radioBlack.Text = "Black";
-            this.radioBlack.UseVisualStyleBackColor = true;
-            this.radioBlack.CheckedChanged += new System.EventHandler(this.radioBlack_CheckedChanged);
-            // 
-            // radioGray
-            // 
-            this.radioGray.AutoSize = true;
-            this.radioGray.Location = new System.Drawing.Point(6, 211);
-            this.radioGray.Name = "radioGray";
-            this.radioGray.Size = new System.Drawing.Size(48, 17);
-            this.radioGray.TabIndex = 1;
-            this.radioGray.TabStop = true;
-            this.radioGray.Text = "Gray";
-            this.radioGray.UseVisualStyleBackColor = true;
-            this.radioGray.CheckedChanged += new System.EventHandler(this.radioGray_CheckedChanged);
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -244,18 +216,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(310, 1);
             this.panel2.TabIndex = 17;
-            // 
-            // radioWhite
-            // 
-            this.radioWhite.AutoSize = true;
-            this.radioWhite.Location = new System.Drawing.Point(6, 234);
-            this.radioWhite.Name = "radioWhite";
-            this.radioWhite.Size = new System.Drawing.Size(56, 17);
-            this.radioWhite.TabIndex = 2;
-            this.radioWhite.TabStop = true;
-            this.radioWhite.Text = "White";
-            this.radioWhite.UseVisualStyleBackColor = true;
-            this.radioWhite.CheckedChanged += new System.EventHandler(this.radioWhite_CheckedChanged);
             // 
             // panel1
             // 
@@ -507,10 +467,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownScale;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.RadioButton radioNone;
-        private System.Windows.Forms.RadioButton radioBlack;
-        private System.Windows.Forms.RadioButton radioGray;
-        private System.Windows.Forms.RadioButton radioWhite;
         private System.Windows.Forms.CheckBox checkBoxLabels;
         private System.Windows.Forms.CheckBox checkBoxDonut;
         private System.Windows.Forms.TabPage tabPage1;
@@ -530,5 +486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnExploded;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
