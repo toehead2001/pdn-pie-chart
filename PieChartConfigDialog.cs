@@ -439,7 +439,7 @@ namespace PieChartEffect
                     break;
             }
 
-            writeValuesHere.Scale = (double)numericUpDownScale.Value;
+            writeValuesHere.Scale = (float)numericUpDownScale.Value;
 
             writeValuesHere.Donut = checkBoxDonut.Checked;
 

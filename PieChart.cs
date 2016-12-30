@@ -99,8 +99,8 @@ namespace PieChartEffect
 
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
-            int xCenter = (selection.Left + selection.Right) / 2;
-            int yCenter = (selection.Top + selection.Bottom) / 2;
+            float xCenter = (selection.Left + selection.Right) / 2f;
+            float yCenter = (selection.Top + selection.Bottom) / 2f;
 
             bool anyExplosions = false;
             try
@@ -119,15 +119,15 @@ namespace PieChartEffect
             }
 
 
-            int baseDiameter = (selection.Width <= selection.Height) ? (int)((selection.Width - 4) * scale) : (int)((selection.Height - 4) * scale);
+            float baseDiameter = (selection.Width <= selection.Height) ? (selection.Width - 4) * scale : (selection.Height - 4) * scale;
 
-            int regDiameter = anyExplosions ? baseDiameter - (baseDiameter / 10) : baseDiameter;
-            int expDiameter = baseDiameter;
+            float regDiameter = anyExplosions ? baseDiameter - (baseDiameter / 10f) : baseDiameter;
+            float expDiameter = baseDiameter;
 
-            int regXOffset = (selection.Width - regDiameter) / 2;
-            int regYOffset = (selection.Height - regDiameter) / 2;
-            int expXOffset = regXOffset - (expDiameter / 20);
-            int expYOffset = regYOffset - (expDiameter / 20);
+            float regXOffset = (selection.Width - regDiameter) / 2f;
+            float regYOffset = (selection.Height - regDiameter) / 2f;
+            float expXOffset = regXOffset - (expDiameter / 20f);
+            float expYOffset = regYOffset - (expDiameter / 20f);
 
 
             Bitmap pieChartBitmap = new Bitmap(selection.Width, selection.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -157,9 +157,9 @@ namespace PieChartEffect
             float sweep = 0.0f;
             SolidBrush sliceBrush = new SolidBrush(Color.Black);
             Pen outlinePen = new Pen(outlineColor, 1);
-            int diameter;
-            int xOffset;
-            int yOffset;
+            float diameter;
+            float xOffset;
+            float yOffset;
 
             Font labelFont = new Font(new FontFamily("Arial"), 12, FontStyle.Bold);
             SolidBrush labelBrush = new SolidBrush(Color.White);
@@ -248,9 +248,9 @@ namespace PieChartEffect
             // Donut Stuff
             if (donut)
             {
-                int donutDiameter = (int)(regDiameter * donutSize);
-                int donutXOffset = (selection.Width - donutDiameter) / 2;
-                int donutYOffset = (selection.Height - donutDiameter) / 2;
+                float donutDiameter = regDiameter * donutSize;
+                float donutXOffset = (selection.Width - donutDiameter) / 2f;
+                float donutYOffset = (selection.Height - donutDiameter) / 2f;
 
                 if (outlineColor != Color.Transparent && slices.Count > 0)
                 {
@@ -293,7 +293,7 @@ namespace PieChartEffect
         List<Slice> slices;
         float angle;
         Color outlineColor;
-        double scale;
+        float scale;
         bool donut;
         float donutSize;
         bool labels;

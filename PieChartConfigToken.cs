@@ -9,7 +9,7 @@ namespace PieChartEffect
         private List<Slice> slices = new List<Slice>();
         double angle = 0;
         Color outlineColor = Color.Black;
-        double scale = 1;
+        float scale = 1;
         bool donut = false;
         float donutSize = 0.333f;
         bool labels = false;
@@ -56,7 +56,7 @@ namespace PieChartEffect
             get;
             set;
         }
-        public double Scale
+        public float Scale
         {
             get;
             set;
