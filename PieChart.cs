@@ -169,7 +169,9 @@ namespace PieChartEffect
             labelFormat.LineAlignment = StringAlignment.Center;
             double labelAngle;
             PointF labelOffset = new PointF();
-            float labelRadius = (regDiameter / 2f) * 0.75f;
+            float labelRadius = regDiameter / 2f * 0.75f;
+            if (donut)
+                labelRadius = Math.Max(regDiameter / 2f * 0.75f, (regDiameter / 2f - regDiameter / 2f * donutSize) / 2f + regDiameter / 2f * donutSize);
 
             try
             {
