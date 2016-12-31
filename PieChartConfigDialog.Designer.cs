@@ -58,12 +58,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.ColumnExploded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIcon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnExploded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -82,7 +82,7 @@
             this.btnOK.Location = new System.Drawing.Point(182, 373);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 5;
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -93,7 +93,7 @@
             this.btnCancel.Location = new System.Drawing.Point(263, 373);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 6;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -139,7 +139,7 @@
             this.button4.Location = new System.Drawing.Point(306, 240);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(18, 19);
-            this.button4.TabIndex = 27;
+            this.button4.TabIndex = 9;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -164,7 +164,7 @@
             131072});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(60, 22);
-            this.numericUpDown1.TabIndex = 25;
+            this.numericUpDown1.TabIndex = 8;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown1.Value = new decimal(new int[] {
             33,
@@ -183,7 +183,7 @@
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(228, 24);
             this.trackBar2.SmallChange = 5;
-            this.trackBar2.TabIndex = 26;
+            this.trackBar2.TabIndex = 7;
             this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar2.Value = 33;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
@@ -194,7 +194,7 @@
             this.label5.Location = new System.Drawing.Point(6, 194);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 23;
+            this.label5.TabIndex = 18;
             this.label5.Text = "Donut";
             // 
             // panel5
@@ -203,7 +203,7 @@
             this.panel5.Location = new System.Drawing.Point(14, 199);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(310, 1);
-            this.panel5.TabIndex = 24;
+            this.panel5.TabIndex = 19;
             // 
             // comboBox1
             // 
@@ -216,7 +216,7 @@
             this.comboBox1.Location = new System.Drawing.Point(9, 165);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 22;
+            this.comboBox1.TabIndex = 5;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label4
@@ -242,7 +242,7 @@
             this.checkBoxLabels.Location = new System.Drawing.Point(9, 292);
             this.checkBoxLabels.Name = "checkBoxLabels";
             this.checkBoxLabels.Size = new System.Drawing.Size(58, 17);
-            this.checkBoxLabels.TabIndex = 1;
+            this.checkBoxLabels.TabIndex = 10;
             this.checkBoxLabels.Text = "Labels";
             this.checkBoxLabels.UseVisualStyleBackColor = true;
             this.checkBoxLabels.CheckedChanged += new System.EventHandler(this.checkBoxLabels_CheckedChanged);
@@ -253,7 +253,7 @@
             this.checkBoxDonut.Location = new System.Drawing.Point(9, 215);
             this.checkBoxDonut.Name = "checkBoxDonut";
             this.checkBoxDonut.Size = new System.Drawing.Size(81, 17);
-            this.checkBoxDonut.TabIndex = 0;
+            this.checkBoxDonut.TabIndex = 6;
             this.checkBoxDonut.Text = "Use Donut";
             this.checkBoxDonut.UseVisualStyleBackColor = true;
             this.checkBoxDonut.CheckedChanged += new System.EventHandler(this.checkBoxDonut_CheckedChanged);
@@ -264,7 +264,7 @@
             this.label3.Location = new System.Drawing.Point(6, 147);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 18;
+            this.label3.TabIndex = 16;
             this.label3.Text = "Outline Color";
             // 
             // label2
@@ -282,7 +282,7 @@
             this.label1.Location = new System.Drawing.Point(6, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 13);
-            this.label1.TabIndex = 12;
+            this.label1.TabIndex = 11;
             this.label1.Text = "Scale";
             // 
             // panel3
@@ -291,7 +291,7 @@
             this.panel3.Location = new System.Drawing.Point(14, 152);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(310, 1);
-            this.panel3.TabIndex = 19;
+            this.panel3.TabIndex = 17;
             // 
             // panel2
             // 
@@ -299,7 +299,7 @@
             this.panel2.Location = new System.Drawing.Point(14, 63);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(310, 1);
-            this.panel2.TabIndex = 17;
+            this.panel2.TabIndex = 14;
             // 
             // panel1
             // 
@@ -307,7 +307,7 @@
             this.panel1.Location = new System.Drawing.Point(14, 13);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(310, 1);
-            this.panel1.TabIndex = 16;
+            this.panel1.TabIndex = 12;
             // 
             // button3
             // 
@@ -315,7 +315,7 @@
             this.button3.Location = new System.Drawing.Point(306, 77);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(18, 19);
-            this.button3.TabIndex = 15;
+            this.button3.TabIndex = 4;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -325,7 +325,7 @@
             this.button1.Location = new System.Drawing.Point(306, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(18, 19);
-            this.button1.TabIndex = 14;
+            this.button1.TabIndex = 2;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -345,7 +345,7 @@
             -2147483648});
             this.txtAngle1.Name = "txtAngle1";
             this.txtAngle1.Size = new System.Drawing.Size(60, 22);
-            this.txtAngle1.TabIndex = 0;
+            this.txtAngle1.TabIndex = 3;
             this.txtAngle1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtAngle1.ValueChanged += new System.EventHandler(this.txtAngle1_ValueChanged);
             // 
@@ -355,7 +355,7 @@
             this.angleSelector1.Location = new System.Drawing.Point(100, 75);
             this.angleSelector1.Name = "angleSelector1";
             this.angleSelector1.Size = new System.Drawing.Size(60, 60);
-            this.angleSelector1.TabIndex = 1;
+            this.angleSelector1.TabIndex = 15;
             this.angleSelector1.AngleChanged += new AngleControl.AngleSelector.AngleChangedDelegate(this.angleSelector1_AngleChanged);
             // 
             // numericUpDownScale
@@ -398,7 +398,7 @@
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(228, 24);
             this.trackBar1.SmallChange = 5;
-            this.trackBar1.TabIndex = 11;
+            this.trackBar1.TabIndex = 0;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar1.Value = 100;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
@@ -421,7 +421,7 @@
             this.button2.Location = new System.Drawing.Point(6, 301);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 12;
+            this.button2.TabIndex = 1;
             this.button2.Text = "Load CSV";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -446,7 +446,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(324, 290);
-            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -463,15 +463,34 @@
             this.dataGridView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
             this.dataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseMove);
             // 
-            // tabControl1
+            // ColumnIcon
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(338, 356);
-            this.tabControl1.TabIndex = 11;
+            this.ColumnIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.ColumnIcon.HeaderText = "";
+            this.ColumnIcon.Name = "ColumnIcon";
+            this.ColumnIcon.ReadOnly = true;
+            this.ColumnIcon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnIcon.Width = 20;
+            // 
+            // ColumnColor
+            // 
+            this.ColumnColor.HeaderText = "colorValue";
+            this.ColumnColor.Name = "ColumnColor";
+            this.ColumnColor.Visible = false;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnName.HeaderText = "Name";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.Width = 61;
+            // 
+            // ColumnValue
+            // 
+            this.ColumnValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnValue.HeaderText = "Value";
+            this.ColumnValue.Name = "ColumnValue";
+            this.ColumnValue.Width = 61;
             // 
             // ColumnExploded
             // 
@@ -482,34 +501,15 @@
             this.ColumnExploded.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.ColumnExploded.Width = 80;
             // 
-            // ColumnValue
+            // tabControl1
             // 
-            this.ColumnValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColumnValue.HeaderText = "Value";
-            this.ColumnValue.Name = "ColumnValue";
-            this.ColumnValue.Width = 61;
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColumnName.HeaderText = "Name";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.Width = 61;
-            // 
-            // ColumnColor
-            // 
-            this.ColumnColor.HeaderText = "colorValue";
-            this.ColumnColor.Name = "ColumnColor";
-            this.ColumnColor.Visible = false;
-            // 
-            // ColumnIcon
-            // 
-            this.ColumnIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.ColumnIcon.HeaderText = "";
-            this.ColumnIcon.Name = "ColumnIcon";
-            this.ColumnIcon.ReadOnly = true;
-            this.ColumnIcon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnIcon.Width = 20;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(338, 356);
+            this.tabControl1.TabIndex = 0;
             // 
             // PieChartConfigDialog
             // 
