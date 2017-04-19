@@ -303,20 +303,6 @@ namespace PieChartEffect
                 }
             }
         }
-
-        private void pnlColor_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            Rectangle swatchRect = e.ClipRectangle;
-            swatchRect.Width--;
-            swatchRect.Height--;
-
-            g.DrawRectangle(Pens.Black, swatchRect);
-            swatchRect.Width -= 2;
-            swatchRect.Height -= 2;
-            swatchRect.Offset(1, 1);
-            g.DrawRectangle(Pens.White, swatchRect);
-        }
         #endregion
 
         #region EffectConfigDialog stuff
