@@ -25,15 +25,19 @@ namespace AngleControl
             this.DoubleBuffered = true;
         }
 
-        private void AngleSelector_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             setDrawRegion();
+
+            base.OnLoad(e);
         }
 
-        private void AngleSelector_SizeChanged(object sender, EventArgs e)
+        protected override void OnSizeChanged(EventArgs e)
         {
             this.Height = this.Width; //Keep it a square
             setDrawRegion();
+
+            base.OnSizeChanged(e);
         }
 
         private void setDrawRegion()
@@ -137,7 +141,7 @@ namespace AngleControl
             base.OnPaint(e);
         }
 
-        private void AngleSelector_MouseDown(object sender, MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             double thisAngle = findNearestAngle(new Point(e.X, e.Y));
 
@@ -146,9 +150,11 @@ namespace AngleControl
                 this.Angle = thisAngle;
                 this.Refresh();
             }
+
+            base.OnMouseDown(e);
         }
 
-        private void AngleSelector_MouseMove(object sender, MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
@@ -160,6 +166,8 @@ namespace AngleControl
                     this.Refresh();
                 }
             }
+
+            base.OnMouseMove(e);
         }
 
         private double findNearestAngle(Point mouseXY)
@@ -181,28 +189,25 @@ namespace AngleControl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "AngleSelector";
             this.Size = new System.Drawing.Size(60, 60);
-            this.Load += new System.EventHandler(this.AngleSelector_Load);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AngleSelector_MouseMove);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AngleSelector_MouseDown);
-            this.SizeChanged += new System.EventHandler(this.AngleSelector_SizeChanged);
-            this.MouseEnter += new System.EventHandler(this.AngleSelector_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.AngleSelector_MouseLeave);
             this.ResumeLayout(false);
-
         }
 
-        private void AngleSelector_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
             outlinePenWidth = 1.6f;
             anglePenWidth = 2.0f;
             this.Refresh();
+
+            base.OnMouseEnter(e);
         }
 
-        private void AngleSelector_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             outlinePenWidth = 1.0f;
             anglePenWidth = 1.6f;
             this.Refresh();
+
+            base.OnMouseLeave(e);
         }
     }
 }
