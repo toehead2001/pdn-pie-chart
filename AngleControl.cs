@@ -21,7 +21,12 @@ namespace AngleControl
 
         public AngleSelector()
         {
-            InitializeComponent();
+            this.SuspendLayout();
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.Name = "AngleSelector";
+            this.Size = new Size(60, 60);
+            this.ResumeLayout(false);
             this.DoubleBuffered = true;
         }
 
@@ -177,19 +182,6 @@ namespace AngleControl
                 return thisAngle;
             else
                 return -1;
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // AngleSelector
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "AngleSelector";
-            this.Size = new System.Drawing.Size(60, 60);
-            this.ResumeLayout(false);
         }
 
         protected override void OnMouseEnter(EventArgs e)
