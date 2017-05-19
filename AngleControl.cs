@@ -67,18 +67,18 @@ namespace AngleControl
         public delegate void AngleChangedDelegate();
         public event AngleChangedDelegate AngleChanged;
 
-        private PointF DegreesToXY(float degrees, float radius, Point origin)
+        private static PointF DegreesToXY(double degrees, float radius, Point origin)
         {
-            PointF xy = new PointF();
             double radians = degrees * Math.PI / 180.0;
 
-            xy.X = (float)Math.Cos(radians) * radius + origin.X;
-            xy.Y = (float)Math.Sin(-radians) * radius + origin.Y;
-
-            return xy;
+            return new PointF
+            {
+                X = (float)Math.Cos(radians) * radius + origin.X,
+                Y = (float)Math.Sin(-radians) * radius + origin.Y
+            };
         }
 
-        private float XYToDegrees(Point xy, Point origin)
+        private static double XYToDegrees(Point xy, Point origin)
         {
             double angle = 0.0;
 
@@ -114,33 +114,32 @@ namespace AngleControl
             }
 
             if (angle > 180) angle -= 360; //Optional. Keeps values between -180 and 180
-            return (float)angle;
+            return angle;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            PointF anglePoint = DegreesToXY((float)angle, origin.X - 3, origin);
+            PointF anglePoint = DegreesToXY(angle, origin.X - 3, origin);
             Rectangle originSquare = new Rectangle(origin.X -3, origin.Y - 3, 6, 6);
 
             //Draw
             using (SolidBrush fill = new SolidBrush(SystemColors.ControlLightLight))
-                g.FillEllipse(fill, drawRegion);
+                e.Graphics.FillEllipse(fill, drawRegion);
             using (Pen outline = new Pen(SystemColors.ControlDark, outlinePenWidth))
-                g.DrawEllipse(outline, drawRegion);
+                e.Graphics.DrawEllipse(outline, drawRegion);
             using (Pen anglePen = new Pen(SystemColors.ControlDark, anglePenWidth))
-                g.DrawLine(anglePen, origin, anglePoint);
+                e.Graphics.DrawLine(anglePen, origin, anglePoint);
             using (SolidBrush centerFill = new SolidBrush(SystemColors.ControlDark))
-                g.FillEllipse(centerFill, originSquare);
+                e.Graphics.FillEllipse(centerFill, originSquare);
 
             base.OnPaint(e);
         }
 
         private void AngleSelector_MouseDown(object sender, MouseEventArgs e)
         {
-            int thisAngle = findNearestAngle(new Point(e.X, e.Y));
+            double thisAngle = findNearestAngle(new Point(e.X, e.Y));
 
             if (thisAngle != -1)
             {
@@ -153,7 +152,7 @@ namespace AngleControl
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                int thisAngle = findNearestAngle(new Point(e.X, e.Y));
+                double thisAngle = findNearestAngle(e.Location);
 
                 if (thisAngle != -1)
                 {
@@ -163,9 +162,9 @@ namespace AngleControl
             }
         }
 
-        private int findNearestAngle(Point mouseXY)
+        private double findNearestAngle(Point mouseXY)
         {
-            int thisAngle = (int)XYToDegrees(mouseXY, origin);
+            double thisAngle = XYToDegrees(mouseXY, origin);
             if (thisAngle != 0)
                 return thisAngle;
             else
