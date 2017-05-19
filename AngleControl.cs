@@ -47,13 +47,13 @@ namespace AngleControl
 
         private void setDrawRegion()
         {
-            drawRegion = new Rectangle(0, 0, this.Width, this.Height);
+            drawRegion = this.ClientRectangle;
             drawRegion.X += 2;
             drawRegion.Y += 2;
             drawRegion.Width -= 4;
             drawRegion.Height -= 4;
 
-            int offset = 2;
+            const int offset = 2;
             origin = new Point(drawRegion.Width / 2 + offset, drawRegion.Height / 2 + offset);
 
             this.Refresh();
@@ -91,9 +91,9 @@ namespace AngleControl
         {
             double angle = 0.0;
 
-            if (xy.Y < origin.Y)
+            if (xy.Y <= origin.Y)
             {
-                if (xy.X > origin.X)
+                if (xy.X >= origin.X)
                 {
                     angle = (double)(xy.X - origin.X) / (double)(origin.Y - xy.Y);
                     angle = Math.Atan(angle);
@@ -108,7 +108,7 @@ namespace AngleControl
             }
             else if (xy.Y > origin.Y)
             {
-                if (xy.X > origin.X)
+                if (xy.X >= origin.X)
                 {
                     angle = (double)(xy.X - origin.X) / (double)(xy.Y - origin.Y);
                     angle = Math.Atan(-angle);
@@ -148,40 +148,21 @@ namespace AngleControl
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            double thisAngle = findNearestAngle(new Point(e.X, e.Y));
-
-            if (thisAngle != -1)
-            {
-                this.Angle = thisAngle;
-                this.Refresh();
-            }
+            this.Angle = XYToDegrees(e.Location, origin);
+            this.Refresh();
 
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            if (e.Button != MouseButtons.None)
             {
-                double thisAngle = findNearestAngle(e.Location);
-
-                if (thisAngle != -1)
-                {
-                    this.Angle = thisAngle;
-                    this.Refresh();
-                }
+                this.Angle = XYToDegrees(e.Location, origin);
+                this.Refresh();
             }
 
             base.OnMouseMove(e);
-        }
-
-        private double findNearestAngle(Point mouseXY)
-        {
-            double thisAngle = XYToDegrees(mouseXY, origin);
-            if (thisAngle != 0)
-                return thisAngle;
-            else
-                return -1;
         }
 
         protected override void OnMouseEnter(EventArgs e)
