@@ -624,12 +624,12 @@ namespace PieChartEffect
 
     internal class Slice
     {
-        public Color Color;
-        public string Name;
-        public double Value;
-        public bool Exploded;
+        internal Color Color { get; }
+        internal string Name { get; }
+        internal double Value { get; }
+        internal bool Exploded { get; }
 
-        public Slice(string name, double value, Color color, bool exploded)
+        internal Slice(string name, double value, Color color, bool exploded)
         {
             Name = name;
             Value = value;
