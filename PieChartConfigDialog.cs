@@ -315,16 +315,10 @@ namespace PieChartEffect
         {
             #region DataGridView
             dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
+            dataGridView1.Rows.Clear();
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
+
             dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
-
-            // note: don't change to foreach
-            int rowCount = dataGridView1.Rows.Count;
-            for (int i = 0; i < rowCount; i++)
-            {
-                if (!dataGridView1.Rows[0].IsNewRow)
-                    dataGridView1.Rows.RemoveAt(0);
-            }
-
             foreach (Slice slice in effectTokenCopy.Slices)
             {
                 Bitmap colorIcon = new Bitmap(iconSize, iconSize);
@@ -354,8 +348,6 @@ namespace PieChartEffect
                 dataGridView1.Rows.Add(new object[] { colorIcon, colorName, slice.Name, slice.Value, slice.Exploded });
                 dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[ColumnIcon.Index].ToolTipText = colorTooltip;
             }
-
-            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
             #endregion
 
