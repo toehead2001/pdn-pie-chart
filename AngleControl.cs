@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace AngleControl
 {
-    public class AngleSelector : UserControl
+    public sealed class AngleSelector : UserControl
     {
         private double angle;
 
