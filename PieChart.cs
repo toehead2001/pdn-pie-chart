@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Reflection;
 
 namespace PieChartEffect
@@ -52,14 +53,7 @@ namespace PieChartEffect
             bool anyExplosions = false;
             try
             {
-                foreach (Slice slice in slices)
-                {
-                    if (slice.Exploded)
-                    {
-                        anyExplosions = true;
-                        break;
-                    }
-                }
+                anyExplosions = slices.Any(slice => slice.Exploded);
             }
             catch
             {
@@ -91,8 +85,7 @@ namespace PieChartEffect
             double total = 0.0;
             try
             {
-                foreach (Slice slice in slices)
-                    total += slice.Value;
+                total = slices.Sum(slice => slice.Value);
             }
             catch
             {
