@@ -10,76 +10,22 @@ namespace PieChartEffect
 {
     public class PluginSupportInfo : IPluginSupportInfo
     {
-        public string Author
-        {
-            get
-            {
-                return ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
-            }
-        }
-        public string Copyright
-        {
-            get
-            {
-                return ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
-            }
-        }
-
-        public Version Version
-        {
-            get
-            {
-                return base.GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public Uri WebsiteUri
-        {
-            get
-            {
-                return new Uri("http://forums.getpaint.net/index.php?showtopic=32169");
-            }
-        }
+        public string Author => ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
+        public string Copyright => ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
+        public string DisplayName => ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
+        public Version Version => base.GetType().Assembly.GetName().Version;
+        public Uri WebsiteUri => new Uri("http://forums.getpaint.net/index.php?showtopic=32169");
     }
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Pie Chart")]
 
     internal class PieChart : Effect<PieChartConfigToken>
     {
-        public static string StaticName
-        {
-            get
-            {
-                return "Pie Chart";
-            }
-        }
-
-        public static Bitmap StaticIcon
-        {
-            get
-            {
-                return new Bitmap(typeof(PieChart), "PieChart.png");
-            }
-        }
-
-        public static string SubmenuName
-        {
-            get
-            {
-                return SubmenuNames.Render;
-            }
-        }
+        public const string StaticName = "Pie Chart";
+        public static readonly Bitmap StaticIcon = new Bitmap(typeof(PieChart), "PieChart.png");
 
         public PieChart()
-            : base(StaticName, StaticIcon, SubmenuName, EffectFlags.Configurable)
+            : base(StaticName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
         {
         }
 
