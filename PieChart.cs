@@ -228,12 +228,10 @@ namespace PieChartEffect
         Surface overlaySurface;
         Surface donutHelperSurface;
 
-        BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
+        readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
-            Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
-
             if (donut)
             {
                 ColorBgra piePixel, overlayPixel;
