@@ -45,15 +45,31 @@ namespace PieChartEffect
             donutSize = newToken.DonutSize;
             labels = newToken.Labels;
 
+            if (pieChartSurface == null)
+                pieChartSurface = new Surface(srcArgs.Surface.Size);
+            else
+                pieChartSurface.Clear(Color.Transparent);
+
+            if (overlaySurface == null)
+                overlaySurface = new Surface(srcArgs.Surface.Size);
+            else
+                overlaySurface.Clear(Color.Transparent);
+
+            if (donutHelperSurface == null)
+                donutHelperSurface = new Surface(srcArgs.Surface.Size);
+            else
+                donutHelperSurface.Clear(Color.Transparent);
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
             float xCenter = (selection.Left + selection.Right) / 2f;
             float yCenter = (selection.Top + selection.Bottom) / 2f;
 
             bool anyExplosions = false;
+            double total = 0.0;
             try
             {
                 anyExplosions = slices.Any(slice => slice.Exploded);
+                total = slices.Sum(slice => slice.Value);
             }
             catch
             {
@@ -65,130 +81,105 @@ namespace PieChartEffect
             float regDiameter = anyExplosions ? baseDiameter - (baseDiameter / 10f) : baseDiameter;
             float expDiameter = baseDiameter;
 
-            float regXOffset = (selection.Width - regDiameter) / 2f;
-            float regYOffset = (selection.Height - regDiameter) / 2f;
+            float regXOffset = (selection.Width - regDiameter) / 2f + selection.Left;
+            float regYOffset = (selection.Height - regDiameter) / 2f + selection.Top;
             float expXOffset = regXOffset - (expDiameter / 20f);
             float expYOffset = regYOffset - (expDiameter / 20f);
-
-
-            Bitmap pieChartBitmap = new Bitmap(selection.Width, selection.Height);
-            Graphics pieChartGraphics = Graphics.FromImage(pieChartBitmap);
-            pieChartGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            Bitmap overlayBitmap = new Bitmap(selection.Width, selection.Height);
-            Graphics overlayGraphics = Graphics.FromImage(overlayBitmap);
-            overlayGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-            overlayGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-
-
-            // Sum the slice values to get the total
-            double total = 0.0;
-            try
-            {
-                total = slices.Sum(slice => slice.Value);
-            }
-            catch
-            {
-            }
 
             // Draw the pie chart
             float start = angle * -1;
             float sweep = 0.0f;
-            SolidBrush sliceBrush = new SolidBrush(Color.Black);
-            Pen outlinePen = new Pen(outlineColor, 1);
             float diameter;
             float xOffset;
             float yOffset;
-
-            GraphicsPath labelPath = new GraphicsPath();
-            FontFamily labelFont = new FontFamily("Tahoma");
-            Pen labelPen = new Pen(Color.FromArgb(153, Color.Black), 2.5f);
-            StringFormat labelFormat = new StringFormat();
-            labelFormat.Alignment = StringAlignment.Center;
-            labelFormat.LineAlignment = StringAlignment.Center;
             double labelAngle;
-            PointF labelOffset = new PointF();
-            float labelRadius = regDiameter / 2f * 0.75f;
-            if (donut)
-                labelRadius = Math.Max(regDiameter / 2f * 0.75f, (regDiameter / 2f - regDiameter / 2f * donutSize) / 2f + regDiameter / 2f * donutSize);
+            PointF labelOffset = Point.Empty;
+            float labelRadius = (donut) ? Math.Max(regDiameter / 2f * 0.75f, (regDiameter / 2f - regDiameter / 2f * donutSize) / 2f + regDiameter / 2f * donutSize) : regDiameter / 2f * 0.75f;
 
-            try
+            using (SolidBrush sliceBrush = new SolidBrush(Color.Black))
+            using (GraphicsPath labelPath = new GraphicsPath())
+            using (FontFamily labelFont = new FontFamily("Tahoma"))
+            using (Pen labelPen = new Pen(Color.FromArgb(153, Color.Black), 2.5f))
+            using (Pen outlinePen = new Pen(outlineColor, 1))
+            using (StringFormat labelFormat = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            using (Graphics pieChartGraphics = new RenderArgs(pieChartSurface).Graphics)
+            using (Graphics overlayGraphics = new RenderArgs(overlaySurface).Graphics)
             {
-                foreach (Slice slice in slices)
+                pieChartGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+                overlayGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                overlayGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
+                try
                 {
-                    sweep = (float)(slice.Value / total * 360.0f);
-                    sliceBrush.Color = slice.Color;
-
-                    if (slice.Exploded)
+                    foreach (Slice slice in slices)
                     {
-                        diameter = expDiameter;
-                        xOffset = expXOffset;
-                        yOffset = expYOffset;
+                        sweep = (float)(slice.Value / total * 360.0f);
+                        sliceBrush.Color = slice.Color;
+
+                        if (slice.Exploded)
+                        {
+                            diameter = expDiameter;
+                            xOffset = expXOffset;
+                            yOffset = expYOffset;
+                        }
+                        else
+                        {
+                            diameter = regDiameter;
+                            xOffset = regXOffset;
+                            yOffset = regYOffset;
+                        }
+
+                        // Fill Slice
+                        pieChartGraphics.FillPie(sliceBrush, xOffset, yOffset, diameter, diameter, start, sweep);
+
+                        // Outline Slice
+                        if (outlineColor == Color.Transparent)
+                            outlinePen.Color = slice.Color;
+
+                        outlinePen.Color = Color.FromArgb(85, outlinePen.Color);
+                        pieChartGraphics.DrawPie(outlinePen, xOffset - 1, yOffset, diameter, diameter, start, sweep);
+                        pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset - 1, diameter, diameter, start, sweep);
+                        pieChartGraphics.DrawPie(outlinePen, xOffset + 1, yOffset, diameter, diameter, start, sweep);
+                        pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset + 1, diameter, diameter, start, sweep);
+                        outlinePen.Color = Color.FromArgb(255, outlinePen.Color);
+
+                        pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset, diameter, diameter, start, sweep);
+
+                        // Slice Label
+                        if (labels)
+                        {
+                            labelAngle = Math.PI * (start + sweep / 2f) / 180f;
+                            labelOffset.X = xCenter + (float)(labelRadius * Math.Cos(labelAngle));
+                            labelOffset.Y = yCenter + (float)(labelRadius * Math.Sin(labelAngle));
+
+                            labelPath.Reset();
+                            labelPath.AddString(slice.Name + "\n" + slice.Value, labelFont, (int)FontStyle.Bold, 14, labelOffset, labelFormat);
+                            overlayGraphics.DrawPath(labelPen, labelPath);
+                            overlayGraphics.FillPath(Brushes.White, labelPath);
+                        }
+
+                        start += sweep;
                     }
-                    else
-                    {
-                        diameter = regDiameter;
-                        xOffset = regXOffset;
-                        yOffset = regYOffset;
-                    }
-
-                    // Fill Slice
-                    pieChartGraphics.FillPie(sliceBrush, xOffset, yOffset, diameter, diameter, start, sweep);
-
-                    // Outline Slice
-                    if (outlineColor == Color.Transparent)
-                        outlinePen.Color = slice.Color;
-
-                    outlinePen.Color = Color.FromArgb(85, outlinePen.Color);
-                    pieChartGraphics.DrawPie(outlinePen, xOffset - 1, yOffset, diameter, diameter, start, sweep);
-                    pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset - 1, diameter, diameter, start, sweep);
-                    pieChartGraphics.DrawPie(outlinePen, xOffset + 1, yOffset, diameter, diameter, start, sweep);
-                    pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset + 1, diameter, diameter, start, sweep);
-                    outlinePen.Color = Color.FromArgb(255, outlinePen.Color);
-
-                    pieChartGraphics.DrawPie(outlinePen, xOffset, yOffset, diameter, diameter, start, sweep);
-
-                    // Slice Label
-                    if (labels)
-                    {
-                        labelAngle = Math.PI * (start + sweep / 2f) / 180f;
-                        labelOffset.X = xCenter - selection.Left + (float)(labelRadius * Math.Cos(labelAngle));
-                        labelOffset.Y = yCenter - selection.Top + (float)(labelRadius * Math.Sin(labelAngle));
-
-                        labelPath.Reset();
-                        labelPath.AddString(slice.Name + "\n" + slice.Value, labelFont, (int)FontStyle.Bold, 14, labelOffset, labelFormat);
-                        overlayGraphics.DrawPath(labelPen, labelPath);
-                        overlayGraphics.FillPath(Brushes.White, labelPath);
-                    }
-
-                    start += sweep;
+                }
+                catch
+                {
                 }
             }
-            catch
-            {
-            }
-
-
-            // Clean up resources
-            outlinePen.Dispose();
-            sliceBrush.Dispose();
-            labelPen.Dispose();
-            labelPath.Dispose();
-            labelFormat.Dispose();
-            labelFont.Dispose();
-
 
             // Donut Stuff
             if (donut)
             {
                 float donutDiameter = regDiameter * donutSize;
-                float donutXOffset = (selection.Width - donutDiameter) / 2f;
-                float donutYOffset = (selection.Height - donutDiameter) / 2f;
+                float donutXOffset = xCenter - donutDiameter / 2f;
+                float donutYOffset = yCenter - donutDiameter / 2f;
 
                 if (outlineColor != Color.Transparent && slices.Count > 0)
                 {
+                    using (Graphics overlayGraphics = new RenderArgs(overlaySurface).Graphics)
                     using (Pen donutPen = new Pen(outlineColor, 1))
                     {
+                        overlayGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                         donutPen.Color = Color.FromArgb(85, donutPen.Color);
                         overlayGraphics.DrawEllipse(donutPen, donutXOffset - 1, donutYOffset, donutDiameter, donutDiameter);
                         overlayGraphics.DrawEllipse(donutPen, donutXOffset, donutYOffset - 1, donutDiameter, donutDiameter);
@@ -199,22 +190,12 @@ namespace PieChartEffect
                     }
                 }
 
-                Bitmap donutBitmap = new Bitmap(selection.Width, selection.Height);
-                using (Graphics donutGraphics = Graphics.FromImage(donutBitmap))
+                using (Graphics donutGraphics = new RenderArgs(donutHelperSurface).Graphics)
                 {
                     donutGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                     donutGraphics.FillEllipse(Brushes.Black, donutXOffset, donutYOffset, donutDiameter, donutDiameter);
                 }
-                donutHelperSurface = Surface.CopyFromBitmap(donutBitmap);
-                donutBitmap.Dispose();
             }
-
-            pieChartSurface = Surface.CopyFromBitmap(pieChartBitmap);
-            pieChartGraphics.Dispose();
-            pieChartBitmap.Dispose();
-            overlaySurface = Surface.CopyFromBitmap(overlayBitmap);
-            overlayGraphics.Dispose();
-            overlayBitmap.Dispose();
         }
 
         protected override void OnRender(Rectangle[] renderRects, int startIndex, int length)
@@ -249,19 +230,16 @@ namespace PieChartEffect
             for (int y = rect.Top; y < rect.Bottom; y++)
             {
                 if (IsCancelRequested) return;
-                int y2 = y - selection.Top;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    int x2 = x - selection.Left;
-
-                    piePixel = pieChartSurface.GetBilinearSample(x2, y2);
+                    piePixel = pieChartSurface[x, y];
                     if (donut)
                     {
-                        donutPixel = donutHelperSurface.GetBilinearSample(x2, y2);
+                        donutPixel = donutHelperSurface[x, y];
                         piePixel.A = Int32Util.ClampToByte(piePixel.A - donutPixel.A);
                     }
 
-                    overlayPixel = overlaySurface.GetBilinearSample(x2, y2);
+                    overlayPixel = overlaySurface[x, y];
 
                     dst[x, y] = normalOp.Apply(piePixel, overlayPixel);
                 }
