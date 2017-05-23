@@ -225,24 +225,27 @@ namespace PieChartEffect
         {
             Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
 
-            ColorBgra piePixel, donutPixel, overlayPixel;
-
-            for (int y = rect.Top; y < rect.Bottom; y++)
+            if (donut)
             {
-                if (IsCancelRequested) return;
-                for (int x = rect.Left; x < rect.Right; x++)
+                ColorBgra piePixel, overlayPixel;
+                for (int y = rect.Top; y < rect.Bottom; y++)
                 {
-                    piePixel = pieChartSurface[x, y];
-                    if (donut)
+                    if (IsCancelRequested) return;
+                    for (int x = rect.Left; x < rect.Right; x++)
                     {
-                        donutPixel = donutHelperSurface[x, y];
-                        piePixel.A = Int32Util.ClampToByte(piePixel.A - donutPixel.A);
+                        piePixel = pieChartSurface[x, y];
+                        piePixel.A = Int32Util.ClampToByte(piePixel.A - donutHelperSurface[x, y].A);
+
+                        overlayPixel = overlaySurface[x, y];
+
+                        dst[x, y] = normalOp.Apply(piePixel, overlayPixel);
                     }
-
-                    overlayPixel = overlaySurface[x, y];
-
-                    dst[x, y] = normalOp.Apply(piePixel, overlayPixel);
                 }
+            }
+            else
+            {
+                normalOp.Apply(pieChartSurface, rect.Location, overlaySurface, rect.Location, rect.Size);
+                dst.CopySurface(pieChartSurface, rect.Location, rect);
             }
         }
     }
