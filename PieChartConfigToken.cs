@@ -4,25 +4,17 @@ using System.Drawing;
 
 namespace PieChartEffect
 {
-    class PieChartConfigToken : EffectConfigToken
+    internal class PieChartConfigToken : EffectConfigToken
     {
-        private List<Slice> slices = new List<Slice>();
-        double angle = 0;
-        Color outlineColor = Color.Black;
-        float scale = 1;
-        bool donut = false;
-        float donutSize = 0.333f;
-        bool labels = false;
-
-        public PieChartConfigToken() : base()
+        public PieChartConfigToken()
         {
-            this.Slices = slices;
-            this.Angle = angle;
-            this.OutlineColor = outlineColor;
-            this.Scale = scale;
-            this.Donut = donut;
-            this.DonutSize = donutSize;
-            this.Labels = labels;
+            this.Slices = new List<Slice>();
+            this.Angle = 0;
+            this.OutlineColor = Color.Black;
+            this.Scale = 1;
+            this.Donut = false;
+            this.DonutSize = 0.333f;
+            this.Labels = false;
         }
 
         private PieChartConfigToken(PieChartConfigToken copyMe)
@@ -35,46 +27,18 @@ namespace PieChartEffect
             this.DonutSize = copyMe.DonutSize;
             this.Labels = copyMe.Labels;
         }
-        
+
         public override object Clone()
         {
             return new PieChartConfigToken(this);
         }
 
-        public List<Slice> Slices
-        {
-            get;
-            set;
-        }
-        public double Angle
-        {
-            get;
-            set;
-        }
-        public Color OutlineColor
-        {
-            get;
-            set;
-        }
-        public float Scale
-        {
-            get;
-            set;
-        }
-        public bool Donut
-        {
-            get;
-            set;
-        }
-        public float DonutSize
-        {
-            get;
-            set;
-        }
-        public bool Labels
-        {
-            get;
-            set;
-        }
+        public List<Slice> Slices;
+        public double Angle;
+        public Color OutlineColor;
+        public float Scale;
+        public bool Donut;
+        public float DonutSize;
+        public bool Labels;
     }
 }
