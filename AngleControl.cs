@@ -3,13 +3,15 @@
 //The Code Project - http://www.codeproject.com
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace AngleControl
 {
-    public sealed class AngleSelector : UserControl
+    [DefaultEvent("ValueChanged")]
+    public sealed class AngleSelector : Control
     {
         private double angle;
 
@@ -22,19 +24,12 @@ namespace AngleControl
         public AngleSelector()
         {
             this.SuspendLayout();
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
             this.Name = "AngleSelector";
             this.Size = new Size(60, 60);
             this.ResumeLayout(false);
             this.DoubleBuffered = true;
-        }
 
-        protected override void OnLoad(EventArgs e)
-        {
             setDrawRegion();
-
-            base.OnLoad(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -61,20 +56,20 @@ namespace AngleControl
 
         public double Angle
         {
-            get { return angle; }
+            get => angle;
             set
             {
                 angle = value;
 
                 if (!this.DesignMode)
-                    AngleChanged?.Invoke(); //Raise event
+                    ValueChanged?.Invoke(this, EventArgs.Empty); //Raise event
 
                 this.Refresh();
             }
         }
 
-        public delegate void AngleChangedDelegate();
-        public event AngleChangedDelegate AngleChanged;
+        [Category("Action")]
+        public event EventHandler ValueChanged;
 
         private static PointF DegreesToXY(double degrees, float radius, Point origin)
         {

@@ -356,7 +356,7 @@
             this.angleSelector1.Name = "angleSelector1";
             this.angleSelector1.Size = new System.Drawing.Size(60, 60);
             this.angleSelector1.TabIndex = 15;
-            this.angleSelector1.AngleChanged += new AngleControl.AngleSelector.AngleChangedDelegate(this.angleSelector1_AngleChanged);
+            this.angleSelector1.ValueChanged += new System.EventHandler(this.angleSelector1_ValueChanged);
             // 
             // numericUpDownScale
             // 

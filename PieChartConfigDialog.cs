@@ -50,7 +50,7 @@ namespace PieChartEffect
             }
         }
 
-        private void angleSelector1_AngleChanged()
+        private void angleSelector1_ValueChanged(object sender, EventArgs e)
         {
             txtAngle1.Value = (decimal)angleSelector1.Angle;
         }
