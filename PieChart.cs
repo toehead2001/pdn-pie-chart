@@ -216,21 +216,21 @@ namespace PieChartEffect
             }
         }
 
-        List<Slice> slices;
-        float angle;
-        Color outlineColor;
-        float scale;
-        bool donut;
-        float donutSize;
-        bool labels;
+        private List<Slice> slices;
+        private float angle;
+        private Color outlineColor;
+        private float scale;
+        private bool donut;
+        private float donutSize;
+        private bool labels;
 
-        Surface pieChartSurface;
-        Surface overlaySurface;
-        Surface donutHelperSurface;
+        private Surface pieChartSurface;
+        private Surface overlaySurface;
+        private Surface donutHelperSurface;
 
-        readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
+        private readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
 
-        void Render(Surface dst, Surface src, Rectangle rect)
+        private void Render(Surface dst, Surface src, Rectangle rect)
         {
             if (donut)
             {

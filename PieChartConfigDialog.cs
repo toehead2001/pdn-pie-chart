@@ -9,14 +9,14 @@ namespace PieChartEffect
 {
     internal partial class PieChartConfigDialog : EffectConfigDialog<PieChart, PieChartConfigToken>
     {
-        private Random random = new Random();
-        private List<string> colorList = new List<string>();
-        private int iconSize;
+        private readonly Random random = new Random();
+        private readonly List<string> colorList = new List<string>();
+        private readonly int iconSize;
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
         private string oldCellValue;
-        private Image newRowImage;
+        private readonly Image newRowImage;
 
         public PieChartConfigDialog()
         {
@@ -132,8 +132,7 @@ namespace PieChartEffect
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
                 // If the mouse moves outside the rectangle, start the drag.
-                if (dragBoxFromMouseDown != Rectangle.Empty &&
-                !dragBoxFromMouseDown.Contains(e.X, e.Y))
+                if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
                 {
                     // Proceed with the drag and drop, passing in the list item.
                     DragDropEffects dropEffect = dataGridView1.DoDragDrop(
@@ -164,8 +163,10 @@ namespace PieChartEffect
                       dragSize);
             }
             else
+            {
                 // Reset the rectangle if the mouse is not over an item in the ListBox.
                 dragBoxFromMouseDown = Rectangle.Empty;
+            }
         }
 
         private void dataGridView1_DragOver(object sender, DragEventArgs e)
@@ -185,12 +186,8 @@ namespace PieChartEffect
                 return;
 
             // If the drag operation was a move then remove and insert the row.
-            if (e.Effect == DragDropEffects.Move)
+            if (e.Effect == DragDropEffects.Move && e.Data.GetData(typeof(DataGridViewRow)) is DataGridViewRow rowToMove)
             {
-                DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
-                if (rowToMove == null)
-                    return;
-
                 dataGridView1.RowsRemoved -= dataGridView1_RowsRemoved;
                 dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
                 dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
@@ -231,7 +228,7 @@ namespace PieChartEffect
 
 
             newCellValue = (string)dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnName.Index].Value;
-            if (newCellValue == string.Empty || newCellValue == null)
+            if (string.IsNullOrEmpty(newCellValue))
                 dataGridView1.Rows[e.Row.Index - 1].Cells[ColumnName.Index].Value = $"New Slice {e.Row.Index}";
 
 
@@ -282,7 +279,7 @@ namespace PieChartEffect
                 else
                     newCellValue = string.Empty;
 
-                if (oldCellValue == string.Empty)
+                if (string.IsNullOrEmpty(oldCellValue))
                     oldCellValue = "1";
 
                 if (!double.TryParse(newCellValue, out d))
@@ -295,9 +292,9 @@ namespace PieChartEffect
             else if (e.ColumnIndex == ColumnName.Index)
             {
                 string newCellValue = (string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (newCellValue == string.Empty || newCellValue == null)
+                if (string.IsNullOrEmpty(newCellValue))
                 {
-                    if (oldCellValue == string.Empty)
+                    if (string.IsNullOrEmpty(oldCellValue))
                         oldCellValue = $"New Slice {e.RowIndex}";
                     dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = oldCellValue;
                 }
@@ -434,7 +431,6 @@ namespace PieChartEffect
                 writeValuesHere.Slices.Add(new Slice(name, value, color, exploded));
             }
         }
-
         #endregion
 
         private void button2_Click(object sender, EventArgs e)
