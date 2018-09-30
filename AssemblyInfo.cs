@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Chart")]
 [assembly: AssemblyCompany("toe_head2001")]
 [assembly: AssemblyProduct("Pie Chart")]
-[assembly: AssemblyCopyright("Copyright © 2016 toe_head2001")]
+[assembly: AssemblyCopyright("Copyright © 2018 toe_head2001")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
