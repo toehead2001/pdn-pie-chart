@@ -11,22 +11,21 @@ namespace PieChartEffect
 {
     public class PluginSupportInfo : IPluginSupportInfo
     {
-        public string Author => ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
-        public string Copyright => ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
-        public string DisplayName => ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
+        public string Author => base.GetType().Assembly.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
+        public string Copyright => base.GetType().Assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
+        public string DisplayName => base.GetType().Assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
         public Version Version => base.GetType().Assembly.GetName().Version;
-        public Uri WebsiteUri => new Uri("http://forums.getpaint.net/index.php?showtopic=32169");
+        public Uri WebsiteUri => new Uri("https://forums.getpaint.net/index.php?showtopic=32169");
     }
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Pie Chart")]
 
     internal class PieChart : Effect<PieChartConfigToken>
     {
-        public const string StaticName = "Pie Chart";
-        public static readonly Bitmap StaticIcon = new Bitmap(typeof(PieChart), "PieChart.png");
+        private static readonly Bitmap StaticIcon = new Bitmap(typeof(PieChart), "PieChart.png");
 
         public PieChart()
-            : base(StaticName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
+            : base("Pie Chart", StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
         {
         }
 
@@ -77,7 +76,6 @@ namespace PieChartEffect
             catch
             {
             }
-
 
             float baseDiameter = Math.Min((selection.Width - 4) * scale, (selection.Height - 4) * scale);
 
