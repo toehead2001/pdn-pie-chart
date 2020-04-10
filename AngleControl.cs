@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AngleControl
 {
-    [DefaultEvent("ValueChanged")]
+    [DefaultEvent(nameof(ValueChanged))]
     public sealed class AngleSelector : Control
     {
         private double angle;
@@ -68,7 +68,7 @@ namespace AngleControl
             }
         }
 
-        [Category("Action")]
+        [Category(nameof(CategoryAttribute.Action))]
         public event EventHandler ValueChanged;
 
         private static PointF DegreesToXY(double degrees, float radius, Point origin)
